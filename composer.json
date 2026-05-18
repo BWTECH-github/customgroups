@@ -1,8 +1,10 @@
 {
     "name": "owncloud/customgroups",
+    "description": "Custom Groups app for owncloud.online. Modified by BW-Tech GmbH.",
+    "license": "AGPL-3.0-or-later",
     "config" : {
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
@@ -13,11 +15,13 @@
         "roave/security-advisories": "dev-latest"
     },
     "require": {
-        "php": ">=8.3"
+        "php": ">=8.4"
     },
     "extra": {
+        "modified-by": "BW-Tech GmbH",
         "bamarni-bin": {
-          "bin-links": false
+          "bin-links": false,
+          "forward-command": false
         }
     }
 }

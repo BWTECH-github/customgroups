@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <info>
+	<!-- Modified by BW-Tech GmbH -->
 	<id>customgroups</id>
 	<name>Custom Groups</name>
 	<namespace>CustomGroups</namespace>
@@ -23,8 +24,8 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	<bugs>https://github.com/owncloud/customgroups/issues</bugs>
 	<repository type="git">http://github.com/owncloud/customgroups.git</repository>
 	<licence>AGPL</licence>
-	<author>Vincent Petry</author>
-	<version>0.10.0</version>
+	<author>Vincent Petry and ownCloud contributors, modified by BW-Tech GmbH</author>
+	<version>0.10.1</version>
 	<documentation>
     		<user>https://doc.owncloud.com/server/latest/user_manual/files/webgui/custom_groups.html</user>
 		<admin>https://doc.owncloud.com/server/latest/admin_manual/configuration/user/user_configuration.html?highlight=custom%20groups#enabling-custom-groups</admin>
@@ -37,8 +38,8 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	</types>
 	<use-migrations>true</use-migrations>
 	<dependencies>
-		<owncloud min-version="11" max-version="11" />
-		<php min-version="8.3" />
+		<owncloud min-version="11" max-version="11.99" />
+		<php min-version="8.4" />
 	</dependencies>
 	<sabre>
 		<plugins>

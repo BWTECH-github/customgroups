@@ -3,6 +3,7 @@
  * @author Thomas Müller <thomas.mueller@tmit.eu>
  *
  * @copyright Copyright (c) 2022, ownCloud GmbH
+ * Modified by BW-Tech GmbH
  * @license AGPL-3.0
  *
  * This code is free software: you can redistribute it and/or modify
@@ -92,7 +93,7 @@ class GuestIntegrationHelper {
 		$controller = $this->getGuestUsersController();
 		if ($controller && method_exists($controller, 'isDomainBlocked')) {
 			/* @phan-suppress-next-line PhanUndeclaredClassMethod */
-			return !$controller->isDomainBlocked($email); /* @phpstan-ignore-line */
+			return !$controller->isDomainBlocked($email);
 		}
 		return true;
 	}
@@ -105,7 +106,7 @@ class GuestIntegrationHelper {
 		$mail = $this->getGuestMail();
 		if ($controller && $mail) {
 			/* @phan-suppress-next-line PhanUndeclaredClassMethod */
-			$resp = $controller->create($userId, ''); /* @phpstan-ignore-line */
+			$resp = $controller->create($userId, '');
 			if ($resp->getStatus() === 201) {
 				$user = $this->userManager->get($userId);
 				if (!$user) {
@@ -124,7 +125,7 @@ class GuestIntegrationHelper {
 
 						// send invitation
 						/* @phan-suppress-next-line PhanUndeclaredClassMethod */
-						$mail->sendGuestPlainInviteMail( /* @phpstan-ignore-line */
+						$mail->sendGuestPlainInviteMail(
 							$user->getUID(),
 							$uid,
 							$registerToken
@@ -140,20 +141,20 @@ class GuestIntegrationHelper {
 	}
 
 	/* @phan-suppress-next-line PhanUndeclaredTypeReturnType */
-	private function getGuestUsersController(): ?UsersController { /* @phpstan-ignore-line */
+	private function getGuestUsersController(): ?UsersController {
 		try {
 			/* @phan-suppress-next-line PhanUndeclaredClassReference */
-			return \OC::$server->query(UsersController::class); /* @phpstan-ignore-line */
+			return \OC::$server->query(UsersController::class);
 		} catch (QueryException $e) {
 		}
 		return null;
 	}
 
 	/* @phan-suppress-next-line PhanUndeclaredTypeReturnType */
-	private function getGuestMail(): ?Mail { /* @phpstan-ignore-line */
+	private function getGuestMail(): ?Mail {
 		try {
 			/* @phan-suppress-next-line PhanUndeclaredClassReference */
-			return \OC::$server->query(Mail::class); /* @phpstan-ignore-line */
+			return \OC::$server->query(Mail::class);
 		} catch (QueryException $e) {
 		}
 		return null;

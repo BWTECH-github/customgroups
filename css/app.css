@@ -24,7 +24,11 @@
 }
 
 #customgroups .group-name-title:hover a,
-#customgroups .grid tr:hover td a {
+#customgroups .grid tr:hover td a,
+#customgroups .group-name-title a:focus,
+#customgroups .group-name-title:focus-within a,
+#customgroups .grid td a:focus,
+#customgroups .grid tr:focus-within td a {
 	visibility: visible;
 }
 

@@ -21,7 +21,7 @@ jobs:
     name: Lint & Syntax
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup PHP 8.4
         uses: shivammathur/setup-php@v2
@@ -59,14 +59,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout owncloud.online (core)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: BWTECH-github/owncloud.online
           ref: main
           path: server
 
       - name: Checkout plugin
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: plugin
 

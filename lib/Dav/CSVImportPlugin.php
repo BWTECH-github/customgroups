@@ -21,7 +21,15 @@ class CSVImportPlugin extends DAV\ServerPlugin {
 
 	public function httpPost(RequestInterface $request, ResponseInterface $response) {
 		$path = $request->getPath();
-		$node = $this->server->tree->getNodeForPath($path);
+		try {
+			$node = $this->server->tree->getNodeForPath($path);
+		} catch (DAV\Exception\NotFound $e) {
+			// Kein Node unter diesem Pfad — nicht unser Endpoint. Die Exception
+			// durchzulassen wuerde JEDEN fremden POST-Handler (z.B. den
+			// Bulk-Upload-Endpoint unter /dav/bulk) mit einem 404 abwuergen,
+			// bevor er ueberhaupt drankommt.
+			return null;
+		}
 		if (!$node instanceof GroupMembershipCollection) {
 			return null;
 		}

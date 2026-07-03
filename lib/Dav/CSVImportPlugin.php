@@ -72,8 +72,17 @@ class CSVImportPlugin extends DAV\ServerPlugin {
 		$header = null;
 		$data = [];
 		while (($row = \fgetcsv($stream, 1000, $delimiter)) !== false) {
-			# TODO: add some verification here
-			$data[\trim($row[0])] = \trim($row[1]);
+			// Skip blank lines (fgetcsv yields [null]) and rows without both a
+			// user and a role column — indexing $row[1] on a one-column row would
+			// warn on PHP 8.4 and trim(null) is deprecated.
+			if (!isset($row[0], $row[1])) {
+				continue;
+			}
+			$user = \trim((string)$row[0]);
+			if ($user === '') {
+				continue;
+			}
+			$data[$user] = \trim((string)$row[1]);
 		}
 		\fclose($stream);
 

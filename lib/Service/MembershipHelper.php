@@ -234,7 +234,11 @@ class MembershipHelper {
 		$searchAdmins = new Search();
 		$searchAdmins->setRoleFilter(CustomGroupsDatabaseHandler::ROLE_ADMIN);
 		$groupAdmins = $this->groupsHandler->getGroupMembers($groupId, $searchAdmins);
-		if (\count($groupAdmins) > 1) {
+		// A group can transiently have zero admins (e.g. the sole admin of an
+		// admin+member group was just deleted). Only exactly one admin, and it
+		// being $userId, makes them the only admin — guard before indexing [0]
+		// so an empty result does not touch an undefined offset.
+		if (\count($groupAdmins) !== 1) {
 			return false;
 		}
 		if ($groupAdmins[0]['user_id'] !== $userId) {

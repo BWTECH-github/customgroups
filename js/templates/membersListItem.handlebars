@@ -1,11 +1,15 @@
-<tr class="group-member" data-id="{{id}}">
-	<td class="avatar-column"><div class="avatar"></div></td>
+{{!-- tabindex holt die Zeile in die Tastaturreihenfolge; erst dadurch greift
+      tr:focus-within und die sonst nur bei Maus-Hover sichtbaren Aktionen
+      werden erreichbar --}}
+<tr class="group-member" data-id="{{id}}" tabindex="0">
+	{{!-- Avatar wiederholt nur den daneben stehenden Namen --}}
+	<td class="avatar-column"><div class="avatar" aria-hidden="true"></div></td>
 	<td class="user-display-name" title="{{displayName}}">{{displayName}}</td>
 	<td><span class="role-display-name">{{roleDisplayName}}</span>
 	{{#if canAdmin}}
-	<a href="#" class="action-change-member-role icon icon-rename" title="{{changeMemberRoleLabel}}"></a>
+	<a href="#" role="button" class="action-change-member-role icon icon-rename" title="{{changeMemberRoleLabel}}"><span class="hidden-visually">{{changeMemberRoleLabel}}</span></a>
 	<span class="loading icon-loading-small hidden"></span>
 	{{/if}}
 	</td>
-	<td>{{#if canAdmin}}<a href="#" class="action action-delete-member" title="{{deleteLabel}}"><span class="icon icon-delete"></span><span class="hidden-visually">{{deleteMemberLabel}}</span></a>{{/if}}</td>
+	<td>{{#if canAdmin}}<a href="#" role="button" class="action action-delete-member" title="{{deleteLabel}}"><span class="icon icon-delete"></span><span class="hidden-visually">{{deleteLabel}}</span></a>{{/if}}</td>
 </tr>

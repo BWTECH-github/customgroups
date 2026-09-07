@@ -25,6 +25,7 @@
 			'click .action-change-member-role': '_onChangeMemberRole',
 			'click .action-leave-group': '_onClickLeaveGroup',
 			'change #custom-group-import-elem': '_onChangeCsvInput',
+			'keydown a[role="button"]': '_onActionKeyDown',
 		},
 
 		initialize: function(model) {
@@ -74,6 +75,26 @@
 			this._loading = state;
 			this.$('.loading-list').toggleClass('hidden', !state);
 			this.$('.grid').toggleClass('hidden', state);
+		},
+
+		/**
+		 * Löst einen als Schaltfläche ausgezeichneten Anker mit der Leertaste
+		 * aus. Browser tun das nur bei echten Buttons von selbst, Anker
+		 * reagieren nur auf Enter.
+		 */
+		_onActionKeyDown: function(ev) {
+			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
+			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
+			if (ev.originalEvent && ev.originalEvent.repeat) {
+				return;
+			}
+			// 32 = Leertaste
+			if (ev.keyCode !== 32) {
+				return;
+			}
+			ev.preventDefault();
+			$(ev.currentTarget).trigger('click');
+			return false;
 		},
 
 		_onClose: function(ev) {

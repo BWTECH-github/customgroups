@@ -29,8 +29,10 @@
 			'keyup form.group-rename-form>input': '_onCancelRename',
 			'blur form.group-rename-form>input': '_onBlurRename',
 			'click .select': '_onSelect',
+			'keydown .select': '_onSelectKeyDown',
 			'click .action-rename-group': '_onRenameGroup',
-			'click .action-delete-group': '_onDeleteGroup'
+			'click .action-delete-group': '_onDeleteGroup',
+			'keydown a[role="button"]': '_onActionKeyDown'
 		},
 
 		initialize: function(collection, options) {
@@ -216,6 +218,48 @@
 				this._selected = null;
 				this.trigger('select', null);
 			}
+		},
+
+		/**
+		 * Löst einen als Schaltfläche ausgezeichneten Anker mit der Leertaste
+		 * aus. Browser tun das nur bei echten Buttons von selbst, Anker
+		 * reagieren nur auf Enter.
+		 */
+		_onActionKeyDown: function(ev) {
+			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
+			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
+			if (ev.originalEvent && ev.originalEvent.repeat) {
+				return;
+			}
+			// 32 = Leertaste
+			if (ev.keyCode !== 32) {
+				return;
+			}
+			ev.preventDefault();
+			$(ev.currentTarget).trigger('click');
+			// false verhindert, dass die Zeile darunter zusätzlich reagiert
+			return false;
+		},
+
+		/**
+		 * Wählt die Gruppe aus, wenn die Zeile selbst den Tastaturfokus hat.
+		 */
+		_onSelectKeyDown: function(ev) {
+			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
+			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
+			if (ev.originalEvent && ev.originalEvent.repeat) {
+				return;
+			}
+			// Tasten aus Kindelementen (Umbenennen-Feld, Aktionen) gehören nicht hierher
+			if (ev.target !== ev.currentTarget) {
+				return;
+			}
+			// 13 = Enter, 32 = Leertaste
+			if (ev.keyCode !== 13 && ev.keyCode !== 32) {
+				return;
+			}
+			ev.preventDefault();
+			this._onSelect(ev);
 		},
 
 		_onSelect: function(ev) {

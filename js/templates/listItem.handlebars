@@ -1,13 +1,20 @@
-<tr class="group select" data-id="{{id}}">
-	<td class="avatar-column"><div class="avatar"></div></td>
+{{!-- Hinweis: die Symbolknöpfe tragen zusätzlich zum title einen unsichtbaren
+      Namen. Der Tooltip verschiebt title nach data-original-title, danach
+      hätten die Knöpfe sonst gar keinen zugänglichen Namen mehr. --}}
+{{!-- tabindex macht die per Klick auswählbare Zeile mit der Tastatur
+      erreichbar und blendet über tr:focus-within die Aktionen ein --}}
+<tr class="group select" data-id="{{id}}" tabindex="0">
+	{{!-- Platzhaltergrafik wiederholt nur den daneben stehenden Gruppennamen,
+	      deshalb aus dem Baum genommen statt Textalternative zu erfinden --}}
+	<td class="avatar-column"><div class="avatar" aria-hidden="true"></div></td>
 	<td class="display-name">
 		<span class="display-name-container">
 			<span class="group-display-name">{{displayName}}</span>
 			{{#if canAdmin}}
-			<a href="#" class="action-rename-group icon icon-rename" title="{{renameLabel}}"></a>
+			<a href="#" role="button" class="action-rename-group icon icon-rename" title="{{renameLabel}}"><span class="hidden-visually">{{renameLabel}}</span></a>
 			{{/if}}
 		</span>
 	</td>
 	<td class="role-display-name">{{roleDisplayName}}</td>
-	<td>{{#if canAdmin}}<a href="#" class="action-delete-group icon icon-delete" title="{{deleteLabel}}"></a>{{/if}}</td>
+	<td>{{#if canAdmin}}<a href="#" role="button" class="action-delete-group icon icon-delete" title="{{deleteLabel}}"><span class="hidden-visually">{{deleteLabel}}</span></a>{{/if}}</td>
 </tr>

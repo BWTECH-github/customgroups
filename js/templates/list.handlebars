@@ -12,10 +12,12 @@
 <table class="grid hidden">
 <thead>
 	<tr>
-		<th></th>
-		<th>{{groupLabel}}</th>
-		<th>{{yourRoleLabel}}</th>
-		<th></th>
+		{{!-- Avatar- und Aktionsspalte tragen keine Überschrift; leere th sind
+		      keine Kopfzellen, deshalb td statt th (keine erfundenen Texte) --}}
+		<td></td>
+		<th scope="col">{{groupLabel}}</th>
+		<th scope="col">{{yourRoleLabel}}</th>
+		<td></td>
 	</tr>
 </thead>
 <tbody class="group-list">

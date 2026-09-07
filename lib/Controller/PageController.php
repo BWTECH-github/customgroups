@@ -23,6 +23,7 @@ namespace OCA\CustomGroups\Controller;
 
 use OCA\CustomGroups\Service\GuestIntegrationHelper;
 use OCP\AppFramework\Controller;
+use OCA\CustomGroups\Service\MembershipHelper;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IUser;
 use OCP\AppFramework\Http;
@@ -63,6 +64,10 @@ class PageController extends Controller {
 	 * @var GuestIntegrationHelper
 	 */
 	private $guestIntegrationHelper;
+	/**
+	 * @var MembershipHelper
+	 */
+	private $helper;
 
 	public function __construct(
 		$appName,
@@ -72,10 +77,12 @@ class PageController extends Controller {
 		IUserManager $userManager,
 		IGroupManager $groupManager,
 		CustomGroupsDatabaseHandler $handler,
-		GuestIntegrationHelper $guestIntegrationHelper
+		GuestIntegrationHelper $guestIntegrationHelper,
+		MembershipHelper $helper
 	) {
 		parent::__construct($appName, $request);
 		$this->handler = $handler;
+		$this->helper = $helper;
 		$this->config = $config;
 		$this->userSession = $userSession;
 		$this->userManager = $userManager;
@@ -91,7 +98,12 @@ class PageController extends Controller {
 		// TODO: cache or add to info.xml ?
 		$modules = \json_decode(\file_get_contents(__DIR__ . '/../../js/modules.json'));
 		return new TemplateResponse($this->appName, 'index', [
-			'modules' => $modules
+			'modules' => $modules,
+			// Ohne diesen Wert liest die Vorlage null und schreibt
+			// data-cancreategroups="false"; das Anlegeformular wird dann nie
+			// gerendert. SettingsPanel::getPanel() setzt ihn seit jeher, hier
+			// fehlte er.
+			'canCreateGroups' => $this->helper->canCreateGroups()
 		]);
 	}
 

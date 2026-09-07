@@ -51,7 +51,10 @@ node_modules
 lib/composer
 js/vendor
 tools/*
-js/templates/*.handlebars.js
+# Die uebersetzten Vorlagen gehoeren in den Baum: die App laedt sie zur
+# Laufzeit, und beim Ausliefern laeuft kein Uebersetzungsschritt. Zwei von
+# ihnen waren schon erzwungen aufgenommen, sechs fehlten - die Oberflaeche
+# blieb dadurch leer.
 tests/unit/results
 .phpunit.result.cache
 vendor/

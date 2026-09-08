@@ -57,7 +57,13 @@
 
 			this.$field = this.$('input');
 			this.$field.autocomplete({
-				minLength: 1,
+				// 0 statt 1: mit leerem Muster liefert PageController::searchUsers
+				// die vollstaendige Liste der noch nicht enthaltenen Benutzer -
+				// Enumerationssperren und vorhandene Mitglieder sind dort schon
+				// beruecksichtigt. Damit wird aus dem Suchfeld eine anklickbare
+				// Liste, ohne eine zweite Datenquelle einzufuehren: wer eine
+				// Gruppe fuellt, kennt seine Kollegen dem Namen nach nicht immer.
+				minLength: 0,
 				delay: 750,
 				focus: function(event) {
 					event.preventDefault();
@@ -65,6 +71,15 @@
 				source: _.bind(this.autocompleteHandler, this),
 				select: _.bind(this._onSelect, this)
 			}).data('ui-autocomplete')._renderItem = _.bind(this.autocompleteRenderItem, this);
+
+			// Beim Hineinklicken sofort alle Benutzer zeigen: jQuery UI oeffnet
+			// das Menue von sich aus erst nach einem Tastendruck. search()
+			// umgeht dabei die 750-ms-Verzoegerung.
+			this.$field.on('focus click', _.bind(function() {
+				if (!this.$field.autocomplete('widget').is(':visible')) {
+					this.$field.autocomplete('search', this.$field.val() || '');
+				}
+			}, this));
 
 			this.delegateEvents();
 		},

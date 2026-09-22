@@ -24,7 +24,10 @@
 		_canCreate: true,
 
 		events: {
-			'submit form': '_onSubmitCreationForm',
+			// Nur das Anlegeformular: "submit form" traf auch das Umbenennen-
+			// Formular, und Enter beim Umbenennen legte dann eine Gruppe mit dem
+			// Text an, der noch (nicht abgeschickt) im Anlegefeld stand.
+			'submit form[name=customGroupsCreationForm]': '_onSubmitCreationForm',
 			'submit form.group-rename-form': '_onSubmitRename',
 			'keyup form.group-rename-form>input': '_onCancelRename',
 			'blur form.group-rename-form>input': '_onBlurRename',
@@ -139,9 +142,13 @@
 			}
 		},
 
-		_onSubmitRename: function() {
+		_onSubmitRename: function(ev) {
 			// usually triggered by enter key
+			// Das Absenden unterband bisher nebenbei der Anlege-Handler; ohne ihn
+			// würde das Formular die Seite neu laden.
+			ev.preventDefault();
 			this.$renameForm.find('input').blur();
+			return false;
 		},
 
 		_onBlurRename: function() {

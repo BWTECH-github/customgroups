@@ -39,6 +39,11 @@ use OCP\IConfig;
  * @package OCA\CustomGroups\Tests\Unit
  */
 class UsersCollectionTest extends \Test\TestCase {
+	/**
+	 * @var \OCA\CustomGroups\Service\GuestIntegrationHelper
+	 */
+	private $guestIntegrationHelper;
+
 	public const USER = 'user1';
 
 	/**

@@ -75,13 +75,28 @@
 			// Beim Hineinklicken sofort alle Benutzer zeigen: jQuery UI oeffnet
 			// das Menue von sich aus erst nach einem Tastendruck. search()
 			// umgeht dabei die 750-ms-Verzoegerung.
-			this.$field.on('focus click', _.bind(function() {
+			this.$field.on('focus click', _.bind(function(ev) {
+				// Nach dem Hinzufügen setzt das Plugin den Fokus selbst zurück;
+				// die Liste soll dann nicht ungefragt über der Mitgliedertabelle
+				// aufgehen (wer weitertippt, bekommt sie ohnehin).
+				if (ev.type === 'focus' && this._quietFocus) {
+					return;
+				}
 				if (!this.$field.autocomplete('widget').is(':visible')) {
 					this.$field.autocomplete('search', this.$field.val() || '');
 				}
 			}, this));
 
 			this.delegateEvents();
+		},
+
+		/**
+		 * Leert das Feld und fokussiert es, ohne die Vorschlagsliste zu öffnen.
+		 */
+		resetQuietly: function() {
+			this._quietFocus = true;
+			this.$field.val('').focus();
+			this._quietFocus = false;
 		},
 
 		getValue: function() {

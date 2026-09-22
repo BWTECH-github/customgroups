@@ -23,6 +23,8 @@ namespace OCA\CustomGroups\Tests\unit;
 use OCA\CustomGroups\CustomGroupsDatabaseHandler;
 use OCA\CustomGroups\Service\GuestIntegrationHelper;
 use OCA\CustomGroups\Controller\PageController;
+use OCA\CustomGroups\Service\MembershipHelper;
+use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IConfig;
@@ -68,6 +70,16 @@ class PageControllerTest extends \Test\TestCase {
 	 */
 	private $groupManager;
 
+	/**
+	 * @var GuestIntegrationHelper
+	 */
+	private $guestIntegrationHelper;
+
+	/**
+	 * @var MembershipHelper|\PHPUnit\Framework\MockObject\MockObject
+	 */
+	private $helper;
+
 	public function setUp(): void {
 		parent::setUp();
 		$this->handler = $this->createMock(CustomGroupsDatabaseHandler::class);
@@ -76,6 +88,7 @@ class PageControllerTest extends \Test\TestCase {
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->groupManager = $this->createMock(IGroupManager::class);
 		$this->guestIntegrationHelper = $this->createMock(GuestIntegrationHelper::class);
+		$this->helper = $this->createMock(MembershipHelper::class);
 
 		$this->pageController = new PageController(
 			'customgroups',
@@ -85,8 +98,33 @@ class PageControllerTest extends \Test\TestCase {
 			$this->userManager,
 			$this->groupManager,
 			$this->handler,
-			$this->guestIntegrationHelper
+			$this->guestIntegrationHelper,
+			$this->helper
 		);
+	}
+
+	public function canCreateProvider(): array {
+		return [[true], [false]];
+	}
+
+	/**
+	 * Die Vorlage schreibt data-cancreategroups; ohne den Wert fehlte das
+	 * Anlegeformular auf der App-Seite immer.
+	 *
+	 * @dataProvider canCreateProvider
+	 */
+	public function testIndexPassesCanCreateGroups(bool $canCreate): void {
+		$this->helper->expects($this->once())
+			->method('canCreateGroups')
+			->willReturn($canCreate);
+
+		$response = $this->pageController->index();
+
+		$this->assertInstanceOf(TemplateResponse::class, $response);
+		$this->assertSame('index', $response->getTemplateName());
+		$parameter = $response->getParams();
+		$this->assertSame($canCreate, $parameter['canCreateGroups']);
+		$this->assertNotEmpty($parameter['modules']);
 	}
 
 	/**

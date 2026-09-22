@@ -48,6 +48,11 @@ class GroupsCollectionTest extends \Test\TestCase {
 	use UserTrait;
 
 	/**
+	 * @var \OCA\CustomGroups\Service\GuestIntegrationHelper
+	 */
+	private $guestIntegrationHelper;
+
+	/**
 	 * @var CustomGroupsDatabaseHandler
 	 */
 	private $handler;
@@ -104,12 +109,44 @@ class GroupsCollectionTest extends \Test\TestCase {
 			$this->config,
 			$this->guestIntegrationHelper
 		);
+		// Die Sammlung prüft die Adminrolle über den übergebenen GroupManager;
+		// ein Mock ohne isAdmin() lieferte false und führte in den Pfad für
+		// Nicht-Admins, dessen Sitzungs-Mock keinen Benutzer kennt.
+		$adminGroupManager = $this->createMock(IGroupManager::class);
+		$adminGroupManager->method('isAdmin')->with('user1')->willReturn(true);
 		$this->collection = new GroupsCollection(
+			$adminGroupManager,
+			$this->handler,
+			$this->helper,
+			$this->config
+		);
+	}
+
+	/**
+	 * Nicht-Admins sehen nur Gruppen, in denen sie Mitglied sind (68c0cd6).
+	 */
+	public function testListGroupsNonAdminOnlyMemberships(): void {
+		$sessionUser = $this->createMock(IUser::class);
+		$sessionUser->method('getUID')->willReturn('user1');
+		$this->userSession->method('getUser')->willReturn($sessionUser);
+
+		$this->handler->expects($this->never())->method('getGroups');
+		$this->handler->expects($this->once())
+			->method('getUserMemberships')
+			->with('user1', null)
+			->willReturn([
+				['group_id' => 1, 'uri' => 'group1', 'display_name' => 'Group One', 'role' => 1],
+			]);
+
+		$collection = new GroupsCollection(
 			$this->createMock(IGroupManager::class),
 			$this->handler,
 			$this->helper,
 			$this->config
 		);
+		$nodes = $collection->getChildren();
+		self::assertCount(1, $nodes);
+		self::assertEquals('group1', $nodes[0]->getName());
 	}
 
 	public function testBase(): void {

@@ -22,8 +22,8 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	<bugs>https://github.com/BWTECH-github/customgroups/issues</bugs>
 	<repository type="git">https://github.com/BWTECH-github/customgroups.git</repository>
 	<licence>AGPL</licence>
-	<author>Vincent Petry and ownCloud contributors, modified by BW-Tech GmbH</author>
-	<version>0.10.4</version>
+	<author>BW-Tech GmbH</author>
+	<version>1.0.0</version>
 	<documentation>
     		<user>https://github.com/BWTECH-github/customgroups#readme</user>
 		<admin>https://github.com/BWTECH-github/customgroups#readme</admin>

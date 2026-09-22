@@ -152,12 +152,21 @@
 		},
 
 		_onClickLeaveGroup: function() {
-			var currentUserMembership = this.collection.get(OC.getCurrentUser().uid);
+			var self = this;
+			var userId = OC.getCurrentUser().uid;
+			// escape:false – OC.dialogs.confirm maskiert den Text selbst (octemplate);
+			// doppelt maskiert stünde "Probe &amp; Team" im Dialog
 			OC.dialogs.confirm(
-				t('customgroups', 'Are you sure that you want to leave the group "{name}" ?', {name: this.model.get('displayName')}),
+				t('customgroups', 'Are you sure that you want to leave the group "{name}" ?', {name: this.model.get('displayName')}, null, {escape: false}),
 				t('customgroups', 'Confirm leaving group'),
 				function confirmCallback(confirmation) {
 					if (confirmation) {
+						// Die Mitgliederliste lädt nach dem Öffnen der Leiste
+						// asynchron. Wer sofort auf "Verlassen" klickt, hat dort
+						// noch keinen eigenen Eintrag; ohne Ersatzmodell brach der
+						// Klick mit "reading 'destroy'" ab.
+						var currentUserMembership = self.collection.get(userId) ||
+							self.collection.add({id: userId}, {silent: true});
 						currentUserMembership.destroy({
 							wait: true,
 							error: function(model, response) {
@@ -229,6 +238,7 @@
 				displayName = userId
 				role = 'guest'
 			}
+			var membersInput = this.membersInput;
 			this.collection.create({
 				id: userId,
 				userDisplayName: displayName,
@@ -238,12 +248,12 @@
 				success: function() {
 					$loading.addClass('hidden');
 					$field.prop('disabled', false);
-					$field.val('').focus();
+					membersInput.resetQuietly();
 				},
 				error: function(model, response) {
 					$loading.addClass('hidden');
 					$field.prop('disabled', false);
-					$field.val('').focus();
+					membersInput.resetQuietly();
 					if (response.status === 412) {
 						OC.Notification.showTemporary(t(
 							'customgroups',
@@ -285,7 +295,7 @@
 
 			// TODO: use displayName once available
 			OC.dialogs.confirm(
-					t('customgroups', 'Are you sure that you want to remove the member "{name}" ?', {name: model.get('userDisplayName')}),
+					t('customgroups', 'Are you sure that you want to remove the member "{name}" ?', {name: model.get('userDisplayName')}, null, {escape: false}),
 					t('customgroups', 'Confirm removal of member'),
 				function confirmCallback(confirmation) {
 					if (confirmation) {
@@ -348,7 +358,7 @@
 			// changing own permissions ?
 			if (model.id === OC.getCurrentUser().uid) {
 				OC.dialogs.confirm(
-						t('customgroups', 'Are you sure that you want to change your own permissions for the group "{name}" ?', {name: this.model.get('displayName')}),
+						t('customgroups', 'Are you sure that you want to change your own permissions for the group "{name}" ?', {name: this.model.get('displayName')}, null, {escape: false}),
 						t('customgroups', 'Confirm role change'),
 					function confirmCallback(confirmation) {
 						if (confirmation) {

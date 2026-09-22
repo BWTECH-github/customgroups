@@ -42,6 +42,11 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  * @package OCA\CustomGroups\Tests\Unit
  */
 class MembershipNodeTest extends \Test\TestCase {
+	/**
+	 * @var \OCA\CustomGroups\Service\GuestIntegrationHelper
+	 */
+	private $guestIntegrationHelper;
+
 	public const CURRENT_USER = 'currentuser';
 	public const NODE_USER = 'nodeuser';
 

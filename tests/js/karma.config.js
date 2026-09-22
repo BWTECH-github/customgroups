@@ -27,7 +27,7 @@
 module.exports = function(config) {
 	var _ = require('underscore');
 	var basePath = '../../';
-	var ownCloudPath = '../../';
+	var serverPath = '../../';
 
 	// can't use wildcard due to loading order
 	var srcFiles = _.map(require(basePath + 'js/modules.json'), function(name) {
@@ -38,22 +38,22 @@ module.exports = function(config) {
 		'tests/js/*.js'
 	];
 
-	var coreModules = require(ownCloudPath + '../../core/js/core.json');
+	var coreModules = require(serverPath + '../../core/js/core.json');
 	var coreLibs = [
-		ownCloudPath + 'core/js/tests/lib/sinon-1.15.4.js',
-		ownCloudPath + 'core/js/tests/specHelper.js'
+		serverPath + 'core/js/tests/lib/sinon-1.15.4.js',
+		serverPath + 'core/js/tests/specHelper.js'
 	];
 
 	coreLibs = coreLibs.concat(coreModules.vendor.map(function prependPath(path) {
-		return ownCloudPath + 'core/vendor/' + path;
+		return serverPath + 'core/vendor/' + path;
 	}));
 
 	coreLibs = coreLibs.concat(coreModules.modules.map(function prependPath(path) {
-		return ownCloudPath + 'core/js/' + path;
+		return serverPath + 'core/js/' + path;
 	}));
 
 	coreLibs = coreLibs.concat(coreModules.libraries.map(function prependPath(path) {
-		return ownCloudPath + 'core/js/' + path;
+		return serverPath + 'core/js/' + path;
 	}));
 
 	var files = [].concat(coreLibs, srcFiles, testFiles);

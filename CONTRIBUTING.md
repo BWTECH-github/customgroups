@@ -28,5 +28,6 @@ Als [Issue](https://github.com/BWTECH-github/customgroups/issues) in diesem Repo
 
 ## Herkunft
 
-Fork der gleichnamigen ownCloud-App. Der Dank fuer die urspruengliche Arbeit
-gehoert der ownCloud-Gemeinschaft; dieser Fork wird davon unabhaengig gepflegt.
+Fork der Upstream-App customgroups (AGPL-3.0). Der Dank fuer die urspruengliche
+Arbeit gehoert ihren Autorinnen und Autoren; dieser Fork wird davon unabhaengig
+gepflegt.

@@ -32,6 +32,11 @@ use OCA\CustomGroups\Search;
  * @package OCA\CustomGroups\Tests\Unit
  */
 class CustomGroupsBackendTest extends \Test\TestCase {
+	/**
+	 * @var \OCA\CustomGroups\CustomGroupsBackend
+	 */
+	private $backend;
+
 	public const GROUP_ID_PREFIX = CustomGroupsBackend::GROUP_ID_PREFIX;
 
 	/**

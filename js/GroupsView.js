@@ -233,16 +233,18 @@
 		 * reagieren nur auf Enter.
 		 */
 		_onActionKeyDown: function(ev) {
-			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
-			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
-			if (ev.originalEvent && ev.originalEvent.repeat) {
-				return;
-			}
 			// 32 = Leertaste
 			if (ev.keyCode !== 32) {
 				return;
 			}
 			ev.preventDefault();
+			// Eine gedrückt gehaltene Taste wiederholt sich. Ohne diese Sperre
+			// öffnen sich mehrere Bestätigungsdialoge übereinander. Nicht nur
+			// zurückkehren: Der Leertasten-Handler des Kerns für Anker klickte
+			// die Wiederholungen sonst selbst.
+			if (ev.originalEvent && ev.originalEvent.repeat) {
+				return false;
+			}
 			$(ev.currentTarget).trigger('click');
 			// false verhindert, dass die Zeile darunter zusätzlich reagiert
 			return false;
@@ -252,8 +254,8 @@
 		 * Wählt die Gruppe aus, wenn die Zeile selbst den Tastaturfokus hat.
 		 */
 		_onSelectKeyDown: function(ev) {
-			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
-			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
+			// Eine gedrückt gehaltene Taste wiederholt sich; die Auswahl soll
+			// dabei nicht mehrfach ausgelöst werden.
 			if (ev.originalEvent && ev.originalEvent.repeat) {
 				return;
 			}

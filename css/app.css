@@ -120,6 +120,32 @@
 	display: inline-block;
 }
 
+/* Redesign: Der Import ist ein <label>; die Knopfregeln des Kerns gelten nur
+   für a.button, button und input – er stand als 24 px hoher grauer Kasten
+   neben den 38 px hohen Pillen. Zwei Kennungen, damit die Label-Regel des
+   Kerns (#body-settings.oco-shell #app-content label) nicht gewinnt. */
+#body-settings.oco-shell #customgroups label.custom-group-import-label.button,
+#body-user.oco-shell #customgroups label.custom-group-import-label.button {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	height: 38px;
+	min-height: 0;
+	padding: 0 16px;
+	border-radius: 999px;
+	background-color: #fff;
+	color: var(--oco-navy, #041e42);
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+#body-settings.oco-shell #customgroups label.custom-group-import-label.button:focus-visible,
+#body-user.oco-shell #customgroups label.custom-group-import-label.button:focus-visible {
+	outline: 2px solid var(--oco-teal-ink, #00806b);
+	outline-offset: 2px;
+}
+
 .custom-group-import-form {
 	display: inline;
 }

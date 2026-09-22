@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 Redesign-Linie (owncloud.online Redesign 11.1). Nur im Zweig `redesign`.
 Im Redesign-Kern Ende zu Ende geprüft (tests/visual/pruefe-customgroups.js,
-42/42; gegen den vorherigen Stand 32/42).
+45/45; gegen den vorherigen Stand 32/42 bzw. 43/45).
 
 ### Fixed
 
@@ -21,6 +21,13 @@ Im Redesign-Kern Ende zu Ende geprüft (tests/visual/pruefe-customgroups.js,
 - Nach dem Hinzufügen eines Mitglieds sprang die Vorschlagsliste ungefragt auf
   und verdeckte die Mitgliedertabelle (Rolle ändern, Entfernen nicht
   erreichbar, bis die Liste geschlossen wurde).
+- „Als CSV importieren" war per Tastatur nicht erreichbar (Dateifeld
+  ausgeblendet, Beschriftung ohne Fokus) und stand als 24 px hoher grauer
+  Kasten neben den Pillen-Knöpfen. Jetzt fokussierbar, Enter/Leertaste
+  öffnen die Dateiauswahl, gleiche Form wie „Als CSV exportieren".
+- Gehaltene Leertaste auf einer Aktion: Die Wiederholungen werden jetzt
+  beendet statt nur übergangen – der Leertasten-Handler des Kerns für
+  Anker klickte sie sonst selbst (mehrere Dialoge übereinander).
 - Unit-Tests liefen gegen den Redesign-Kern nicht: PageControllerTest übergab
   8 statt 9 Konstruktorargumente, GroupsCollectionTest prüfte die
   Adminrolle über einen Mock ohne isAdmin(), dynamische Eigenschaften in 7

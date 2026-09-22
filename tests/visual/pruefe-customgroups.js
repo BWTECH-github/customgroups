@@ -335,6 +335,45 @@ async function dialogJa(seite) {
 	const importMeldung = await s.evaluate(() => window.__meldungen.join(' | '));
 	pruefe('CSV-Import fügt Mitglied hinzu und meldet Erfolg', await s.locator('#customgroups tr.group-member[data-id="cgprobe-b"]').count() === 1 && importMeldung !== '', importMeldung);
 
+	// --- Import-Knopf: Aussehen wie die Nachbarknöpfe, per Tastatur bedienbar --
+	const knopfStil = await s.evaluate(() => {
+		const m = (sel) => { const e = document.querySelector(sel); if (!e) { return null; } const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return { h: Math.round(r.height), radius: cs.borderTopLeftRadius, bg: cs.backgroundColor }; };
+		return { export: m('#customgroups .action-export-csv'), import: m('#customgroups .custom-group-import-label') };
+	});
+	pruefe('CSV-Import-Knopf sieht aus wie "Als CSV exportieren"', !!knopfStil.import && !!knopfStil.export && knopfStil.import.h === knopfStil.export.h && knopfStil.import.radius === knopfStil.export.radius && knopfStil.import.bg === knopfStil.export.bg, JSON.stringify(knopfStil));
+	// nach dem Import baut die Leiste ihren Kopf neu auf
+	await s.waitForTimeout(1500);
+	await s.locator('#customgroups .custom-group-import-label').focus().catch(() => {});
+	const [auswahl] = await Promise.all([
+		s.waitForEvent('filechooser', { timeout: 5000 }).catch(() => null),
+		s.keyboard.press('Enter'),
+	]);
+	pruefe('CSV-Import per Tastatur: Enter öffnet die Dateiauswahl', !!auswahl);
+	if (auswahl) {
+		// ohne Auswahl schließen, sonst bleibt sie offen und blockiert die Seite
+		await auswahl.setFiles([]).catch(() => {});
+		await s.waitForTimeout(300);
+	}
+
+	// --- gehaltene Leertaste auf "Mitglied entfernen": nur ein Dialog -----------
+	const entfernenKnopf = s.locator('#customgroups tr.group-member[data-id="cgprobe-b"] .action-delete-member');
+	await s.locator('#customgroups tr.group-member[data-id="cgprobe-b"]').hover({ timeout: 5000 }).catch(() => {});
+	await entfernenKnopf.focus().catch(() => {});
+	// Druck plus eine Wiederholung, solange der Fokus noch am Anker steht. Nicht
+	// loslassen, bevor der Dialog zu ist: Weitere Wiederholungen landen auf dem
+	// fokussierten "Ja" des Kerndialogs, das Loslassen bestätigte ihn.
+	await s.keyboard.down(' ');
+	await s.keyboard.down(' ');
+	await s.waitForTimeout(800);
+	const dialoge = await s.evaluate(() => Array.from(document.querySelectorAll('.oc-dialog')).filter((d) => d.getClientRects().length > 0).length);
+	pruefe('gehaltene Leertaste öffnet nur einen Bestätigungsdialog', dialoge === 1, dialoge);
+	for (let i = 0; i < dialoge; i++) {
+		await s.keyboard.press('Escape');
+		await s.waitForTimeout(300);
+	}
+	await s.keyboard.up(' ');
+	await s.waitForTimeout(300);
+
 	// --- Mitglied entfernen ----------------------------------------------------
 	const mb = s.locator('#customgroups tr.group-member[data-id="cgprobe-b"]');
 	await mb.hover({ timeout: 5000 }).catch(() => {});

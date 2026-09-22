@@ -26,6 +26,22 @@
 			'click .action-leave-group': '_onClickLeaveGroup',
 			'change #custom-group-import-elem': '_onChangeCsvInput',
 			'keydown a[role="button"]': '_onActionKeyDown',
+			'keydown .custom-group-import-label': '_onImportKeyDown',
+		},
+
+		/**
+		 * Enter und Leertaste auf dem Import-Knopf öffnen die Dateiauswahl
+		 * (das Dateifeld selbst ist ausgeblendet).
+		 */
+		_onImportKeyDown: function(ev) {
+			if (ev.keyCode !== 13 && ev.keyCode !== 32) {
+				return;
+			}
+			ev.preventDefault();
+			if (!(ev.originalEvent && ev.originalEvent.repeat)) {
+				this.$('#custom-group-import-elem').trigger('click');
+			}
+			return false;
 		},
 
 		initialize: function(model) {
@@ -83,16 +99,18 @@
 		 * reagieren nur auf Enter.
 		 */
 		_onActionKeyDown: function(ev) {
-			// Eine gedrueckt gehaltene Taste wiederholt sich. Ohne diese Sperre
-			// oeffnen sich mehrere Bestaetigungsdialoge uebereinander.
-			if (ev.originalEvent && ev.originalEvent.repeat) {
-				return;
-			}
 			// 32 = Leertaste
 			if (ev.keyCode !== 32) {
 				return;
 			}
 			ev.preventDefault();
+			// Eine gedrückt gehaltene Taste wiederholt sich. Ohne diese Sperre
+			// öffnen sich mehrere Bestätigungsdialoge übereinander. Nicht nur
+			// zurückkehren: Der Leertasten-Handler des Kerns für Anker klickte
+			// die Wiederholungen sonst selbst.
+			if (ev.originalEvent && ev.originalEvent.repeat) {
+				return false;
+			}
 			$(ev.currentTarget).trigger('click');
 			return false;
 		},

@@ -23,7 +23,7 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	<repository type="git">https://github.com/BWTECH-github/customgroups.git</repository>
 	<licence>AGPL</licence>
 	<author>BW-Tech GmbH</author>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<documentation>
     		<user>https://github.com/BWTECH-github/customgroups#readme</user>
 		<admin>https://github.com/BWTECH-github/customgroups#readme</admin>

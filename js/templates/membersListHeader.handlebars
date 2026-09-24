@@ -1,10 +1,13 @@
 <div>
 	<div class="group-name-title">
-		<span class="avatar"></span>
+		{{!-- Platzhaltergrafik zum Gruppennamen, rein schmückend --}}
+		<span class="avatar" aria-hidden="true"></span>
 		<span class="group-name-title-display">{{groupName}}</span>
 	</div>
 
-	<a class="close action-close icon-close" href="#" title="{{closeLabel}}"></a>
+	{{!-- der Tooltip entfernt title aus dem Markup, deshalb der unsichtbare
+	      Name im Knopf --}}
+	<a class="close action-close icon-close" role="button" href="#" title="{{closeLabel}}"><span class="hidden-visually">{{closeLabel}}</span></a>
 </div>
 <div class="custom-group-buttons">
 	{{#if userIsMember}}

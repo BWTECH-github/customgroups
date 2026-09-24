@@ -10,6 +10,6 @@ templates['app'] = template({"compiler":[8,">= 4.3.0"],"main":function(container
 
   return "<h2>"
     + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"customGroupsTitle") || (depth0 != null ? lookupProperty(depth0,"customGroupsTitle") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"customGroupsTitle","hash":{},"data":data,"loc":{"start":{"line":1,"column":4},"end":{"line":1,"column":25}}}) : helper)))
-    + "</h2>\r\n<div class=\"groups-container icon-loading\"></div>\r\n<div class=\"members-container sidebar disappear\" id=\"app-sidebar\"></div>\r\n\r\n";
+    + "</h2>\n<div class=\"groups-container icon-loading\"></div>\n<div class=\"members-container sidebar disappear\" id=\"app-sidebar\"></div>\n\n";
 },"useData":true});
 })();

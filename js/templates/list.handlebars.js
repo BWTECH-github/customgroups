@@ -30,12 +30,12 @@ templates['list'] = template({"1":function(container,depth0,helpers,partials,dat
     + alias4(((helper = (helper = lookupProperty(helpers,"newGroupPlaceholder") || (depth0 != null ? lookupProperty(depth0,"newGroupPlaceholder") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"newGroupPlaceholder","hash":{},"data":data,"loc":{"start":{"line":10,"column":42},"end":{"line":10,"column":65}}}) : helper)))
     + "\" aria-label=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"newGroupPlaceholder") || (depth0 != null ? lookupProperty(depth0,"newGroupPlaceholder") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"newGroupPlaceholder","hash":{},"data":data,"loc":{"start":{"line":10,"column":79},"end":{"line":10,"column":102}}}) : helper)))
-    + "\" />\r\n</form>\r\n<table class=\"grid hidden\">\r\n<thead>\r\n	<tr>\r\n		<th></th>\r\n		<th>"
-    + alias4(((helper = (helper = lookupProperty(helpers,"groupLabel") || (depth0 != null ? lookupProperty(depth0,"groupLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"groupLabel","hash":{},"data":data,"loc":{"start":{"line":16,"column":6},"end":{"line":16,"column":20}}}) : helper)))
-    + "</th>\r\n		<th>"
-    + alias4(((helper = (helper = lookupProperty(helpers,"yourRoleLabel") || (depth0 != null ? lookupProperty(depth0,"yourRoleLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"yourRoleLabel","hash":{},"data":data,"loc":{"start":{"line":17,"column":6},"end":{"line":17,"column":23}}}) : helper)))
-    + "</th>\r\n		<th></th>\r\n	</tr>\r\n</thead>\r\n<tbody class=\"group-list\">\r\n</tbody>\r\n</table>\r\n<div class=\"empty hidden\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"emptyMessage") || (depth0 != null ? lookupProperty(depth0,"emptyMessage") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"emptyMessage","hash":{},"data":data,"loc":{"start":{"line":24,"column":26},"end":{"line":24,"column":42}}}) : helper)))
+    + "\" />\r\n</form>\r\n<table class=\"grid hidden\">\r\n<thead>\r\n	<tr>\r\n		<td></td>\r\n		<th scope=\"col\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"groupLabel") || (depth0 != null ? lookupProperty(depth0,"groupLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"groupLabel","hash":{},"data":data,"loc":{"start":{"line":18,"column":18},"end":{"line":18,"column":32}}}) : helper)))
+    + "</th>\r\n		<th scope=\"col\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"yourRoleLabel") || (depth0 != null ? lookupProperty(depth0,"yourRoleLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"yourRoleLabel","hash":{},"data":data,"loc":{"start":{"line":19,"column":18},"end":{"line":19,"column":35}}}) : helper)))
+    + "</th>\r\n		<td></td>\r\n	</tr>\r\n</thead>\r\n<tbody class=\"group-list\">\r\n</tbody>\r\n</table>\r\n<div class=\"empty hidden\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"emptyMessage") || (depth0 != null ? lookupProperty(depth0,"emptyMessage") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"emptyMessage","hash":{},"data":data,"loc":{"start":{"line":26,"column":26},"end":{"line":26,"column":42}}}) : helper)))
     + "</div>\r\n<div class=\"loading hidden\" style=\"height: 50px\"></div>\r\n";
 },"useData":true});
 })();

@@ -2,10 +2,15 @@
 </div>
 <table class="grid hidden">
 	<thead>
-		<th></th>
-		<th>{{memberLabelHeader}}</th>
-		<th>{{roleLabelHeader}}</th>
-		<th></th>
+		{{!-- die Kopfzellen standen ohne tr im thead; ohne Zeile gibt es keine
+		      Spaltenzuordnung. Avatar- und Aktionsspalte tragen keine
+		      Überschrift und sind deshalb td, nicht leere th. --}}
+		<tr>
+			<td></td>
+			<th scope="col">{{memberLabelHeader}}</th>
+			<th scope="col">{{roleLabelHeader}}</th>
+			<td></td>
+		</tr>
 	</thead>
 	<tbody class="group-member-list">
 	</tbody>

@@ -16,7 +16,10 @@
 	{{#if canAdmin}}
 		<form class="custom-group-import-form" enctype="multipart/form-data" method="post" name="custom-group-csv-import">
 			<a class="button action-export-csv" href="{{downloadUrl}}">{{exportCsvLabel}}</a>
-			<label for="custom-group-import-elem" class="custom-group-import-label button">{{importCsvLabel}}</label>
+			{{!-- Das Dateifeld ist ausgeblendet; ohne tabindex war der Import per
+			      Tastatur nicht erreichbar. Enter und Leertaste öffnen die
+			      Dateiauswahl (MembersView._onImportKeyDown). --}}
+			<label for="custom-group-import-elem" class="custom-group-import-label button" role="button" tabindex="0">{{importCsvLabel}}</label>
 			<input id="custom-group-import-elem" name="csv-input" type="file" accept="text/csv" />
 		</form>
 	{{/if}}

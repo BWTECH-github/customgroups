@@ -23,8 +23,8 @@ templates['membersListHeader'] = template({"1":function(container,depth0,helpers
     + alias4(((helper = (helper = lookupProperty(helpers,"downloadUrl") || (depth0 != null ? lookupProperty(depth0,"downloadUrl") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"downloadUrl","hash":{},"data":data,"loc":{"start":{"line":18,"column":45},"end":{"line":18,"column":60}}}) : helper)))
     + "\">"
     + alias4(((helper = (helper = lookupProperty(helpers,"exportCsvLabel") || (depth0 != null ? lookupProperty(depth0,"exportCsvLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"exportCsvLabel","hash":{},"data":data,"loc":{"start":{"line":18,"column":62},"end":{"line":18,"column":80}}}) : helper)))
-    + "</a>\r\n			<label for=\"custom-group-import-elem\" class=\"custom-group-import-label button\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"importCsvLabel") || (depth0 != null ? lookupProperty(depth0,"importCsvLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"importCsvLabel","hash":{},"data":data,"loc":{"start":{"line":19,"column":82},"end":{"line":19,"column":100}}}) : helper)))
+    + "</a>\r\n			<label for=\"custom-group-import-elem\" class=\"custom-group-import-label button\" role=\"button\" tabindex=\"0\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"importCsvLabel") || (depth0 != null ? lookupProperty(depth0,"importCsvLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"importCsvLabel","hash":{},"data":data,"loc":{"start":{"line":22,"column":109},"end":{"line":22,"column":127}}}) : helper)))
     + "</label>\r\n			<input id=\"custom-group-import-elem\" name=\"csv-input\" type=\"file\" accept=\"text/csv\" />\r\n		</form>\r\n";
 },"5":function(container,depth0,helpers,partials,data) {
     return "	<div class=\"add-member-container\"></div>\r\n";
@@ -44,8 +44,8 @@ templates['membersListHeader'] = template({"1":function(container,depth0,helpers
     + alias4(((helper = (helper = lookupProperty(helpers,"closeLabel") || (depth0 != null ? lookupProperty(depth0,"closeLabel") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"closeLabel","hash":{},"data":data,"loc":{"start":{"line":10,"column":118},"end":{"line":10,"column":132}}}) : helper)))
     + "</span></a>\r\n</div>\r\n<div class=\"custom-group-buttons\">\r\n"
     + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"userIsMember") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":13,"column":1},"end":{"line":15,"column":8}}})) != null ? stack1 : "")
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"canAdmin") : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":16,"column":1},"end":{"line":22,"column":8}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"canAdmin") : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":16,"column":1},"end":{"line":25,"column":8}}})) != null ? stack1 : "")
     + "</div>\r\n"
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"canAdmin") : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":24,"column":0},"end":{"line":26,"column":7}}})) != null ? stack1 : "");
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"canAdmin") : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":27,"column":0},"end":{"line":29,"column":7}}})) != null ? stack1 : "");
 },"useData":true});
 })();

@@ -15,13 +15,25 @@ unter einer Nummer lassen sich auf einer Instanz nicht auseinanderhalten.
 - Enter beim Umbenennen einer Gruppe legte zusätzlich eine neue Gruppe mit
   dem Text aus dem Anlegefeld an (der Anlege-Handler traf beide Formulare).
 - „Gruppe verlassen“ brach mit „reading 'destroy'“ ab, wenn die
-  Mitgliederliste beim Klick noch lud.
+  Mitgliederliste beim Klick noch lud. Der Ersatzeintrag aus der ersten
+  Behebung (Redesign-Linie) schickte zudem keine Anfrage an den Server: Der
+  Kern hält jeden nicht vom Server geladenen Eintrag für neu, und Backbone
+  löscht neue Modelle nur lokal – die Mitgliedschaft blieb bestehen, ohne
+  Meldung. Jetzt geht das DELETE wirklich an den Server.
 - Bestätigungsdialoge (Mitglied entfernen, Gruppe verlassen, eigene Rolle
   ändern) zeigten Namen doppelt maskiert (`Probe &amp; Team`).
 - „Als CSV importieren“ ist per Tastatur erreichbar (Enter/Leertaste öffnen
   die Dateiauswahl).
 - Eine gehaltene Leertaste auf einer Aktion öffnet nicht mehr mehrere
   Bestätigungsdialoge übereinander.
+- Mitgliederzeilen werden über die Nutzerkennung statt über ihre Position
+  angesprochen. Traf die Mitgliederliste ein, während der Server das
+  Verlassen noch bearbeitete, verschwand sonst die Zeile eines anderen
+  Mitglieds aus der Anzeige, und die eigene Zeile fehlte, wenn das Verlassen
+  scheiterte (etwa als letzter Gruppenverwalter).
+- Die übersetzten Handlebars-Vorlagen sind einheitlich mit LF-Zeilenenden
+  in den Zeichenketten übersetzt (vorher sechs Dateien mit CRLF); nur
+  Leerraum im erzeugten HTML, kein Verhaltensunterschied.
 - Unit-Tests liefen auf main mit 24 Fehlern (PageControllerTest übergab seit
   dem canCreateGroups-Fix 8 statt 9 Konstruktorargumente); dazu neue Tests
   für canCreateGroups und die Einschränkung auf eigene Gruppen.

@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.10.5] - 2026-09-24
+
+Rückportierung der Fehlerbehebungen aus der Redesign-Linie (1.0.x), soweit
+sie ohne den Redesign-Kern laufen. 0.10.5 statt 0.10.4: unter 0.10.4 steht
+auf redesign bereits ein Stand ohne diese Fehlerbehebungen, und zwei Stände
+unter einer Nummer lassen sich auf einer Instanz nicht auseinanderhalten.
+
+### Fixed
+
+- Enter beim Umbenennen einer Gruppe legte zusätzlich eine neue Gruppe mit
+  dem Text aus dem Anlegefeld an (der Anlege-Handler traf beide Formulare).
+- „Gruppe verlassen“ brach mit „reading 'destroy'“ ab, wenn die
+  Mitgliederliste beim Klick noch lud.
+- Bestätigungsdialoge (Mitglied entfernen, Gruppe verlassen, eigene Rolle
+  ändern) zeigten Namen doppelt maskiert (`Probe &amp; Team`).
+- „Als CSV importieren“ ist per Tastatur erreichbar (Enter/Leertaste öffnen
+  die Dateiauswahl).
+- Eine gehaltene Leertaste auf einer Aktion öffnet nicht mehr mehrere
+  Bestätigungsdialoge übereinander.
+- Unit-Tests liefen auf main mit 24 Fehlern (PageControllerTest übergab seit
+  dem canCreateGroups-Fix 8 statt 9 Konstruktorargumente); dazu neue Tests
+  für canCreateGroups und die Einschränkung auf eigene Gruppen.
+
+## [0.10.4] - 2026-09-07
+
+### Fixed
+
+- Barrierefreiheit: Gruppenzeilen, Umbenennen und Löschen sind per Tastatur
+  bedienbar (tabindex an den Zeilen, Enter/Leertaste), Symbol-Knöpfe haben
+  einen zugänglichen Namen, der Löschen-Knopf verwies auf eine nicht
+  vorhandene Zeichenkette (Name leer), Tabellenköpfe mit scope="col".
+
+## [0.10.3] - 2026-09-07
+
+### Fixed
+
+- Gruppenverwaltung wieder benutzbar: sechs übersetzte Handlebars-Vorlagen
+  fehlten im Baum, und PageController::index() gab canCreateGroups nicht an
+  die Vorlage weiter – das Anlegeformular fehlte auf der App-Seite immer.
+
 ## [0.10.2] - 2026-08-13
 
 ### Changed

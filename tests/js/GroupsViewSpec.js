@@ -357,6 +357,18 @@ describe('GroupsView test', function() {
 				});
 				expect($groupEl.find('input').length).toEqual(0);
 			});
+			it('does not create a group when submitting the rename form', function() {
+				// Text im Anlegefeld, der nicht abgeschickt wurde: Enter beim
+				// Umbenennen legte daraus früher eine zusätzliche Gruppe an.
+				var createStub = sinon.stub(collection, 'create');
+				view.$('[name=groupName]').val('pending');
+				$groupEl.find('.action-rename-group').click();
+				$groupEl.find('input').val('Group Renamed');
+				$groupEl.find('form').submit();
+				expect(createStub.notCalled).toEqual(true);
+				expect(model.save.calledOnce).toEqual(true);
+				createStub.restore();
+			});
 			it('does not save model on abort', function() {
 				$groupEl.find('.action-rename-group').click();
 				$groupEl.find('input').trigger($.Event('keyup', {keyCode: 27}));

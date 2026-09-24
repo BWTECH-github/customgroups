@@ -283,6 +283,47 @@ describe('MembersView test', function() {
 
 				expect(currentUserModel.destroy.notCalled).toEqual(true);
 			});
+			it('leaves group even if the own membership is not loaded yet', function() {
+				// Die Mitgliederliste lädt asynchron; ohne eigenen Eintrag brach
+				// der Klick früher mit "reading 'destroy'" ab.
+				collection.remove('currentUser');
+				var destroyStub = sinon.stub(OCA.CustomGroups.MemberModel.prototype, 'destroy');
+				try {
+					view.$('.action-leave-group').click();
+					confirmStub.yield(true);
+
+					expect(destroyStub.calledOnce).toEqual(true);
+					expect(destroyStub.getCall(0).thisValue.id).toEqual('currentUser');
+				} finally {
+					destroyStub.restore();
+				}
+			});
+			it('does not escape the group name twice in the confirmation', function() {
+				// OC.dialogs maskiert die Meldung selbst.
+				model.set({displayName: 'Probe & Team'});
+				view.$('.action-leave-group').click();
+
+				expect(confirmStub.getCall(0).args[0]).toContain('"Probe & Team"');
+			});
+		});
+
+		describe('importing members', function() {
+			it('opens the file selection with Enter or Space on the import button', function() {
+				var clickSpy = sinon.spy();
+				view.$('#custom-group-import-elem').on('click', function(ev) {
+					// kein echter Dateidialog im Testbrowser
+					ev.preventDefault();
+					clickSpy();
+				});
+				var $label = view.$('.custom-group-import-label');
+
+				expect($label.attr('tabindex')).toEqual('0');
+				$label.trigger($.Event('keydown', {keyCode: 13}));
+				$label.trigger($.Event('keydown', {keyCode: 32}));
+				$label.trigger($.Event('keydown', {keyCode: 65}));
+
+				expect(clickSpy.calledTwice).toEqual(true);
+			});
 		});
 
 		describe('deleting members', function() {

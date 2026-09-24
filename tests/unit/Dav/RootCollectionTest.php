@@ -34,6 +34,11 @@ use OCP\IGroupManager;
  * @package OCA\CustomGroups\Tests\Unit
  */
 class RootCollectionTest extends \Test\TestCase {
+	/**
+	 * @var \OCA\CustomGroups\Dav\RootCollection
+	 */
+	private $collection;
+
 	public function setUp(): void {
 		parent::setUp();
 		$handler = $this->createMock(CustomGroupsDatabaseHandler::class);

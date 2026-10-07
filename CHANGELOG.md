@@ -46,6 +46,58 @@ Im Redesign-Kern Ende zu Ende geprüft (tests/visual/pruefe-customgroups.js,
   info.xml-Autor BW-Tech GmbH, README neu; tote Upstream-CI entfernt
   (sonar-project.properties, Transifex-Konfiguration l10n/.tx).
 
+## [0.10.5] - 2026-09-24
+
+Rückportierung der Fehlerbehebungen aus der Redesign-Linie (1.0.x), soweit
+sie ohne den Redesign-Kern laufen. 0.10.5 statt 0.10.4: unter 0.10.4 steht
+auf redesign bereits ein Stand ohne diese Fehlerbehebungen, und zwei Stände
+unter einer Nummer lassen sich auf einer Instanz nicht auseinanderhalten.
+
+### Fixed
+
+- Enter beim Umbenennen einer Gruppe legte zusätzlich eine neue Gruppe mit
+  dem Text aus dem Anlegefeld an (der Anlege-Handler traf beide Formulare).
+- „Gruppe verlassen“ brach mit „reading 'destroy'“ ab, wenn die
+  Mitgliederliste beim Klick noch lud. Der Ersatzeintrag aus der ersten
+  Behebung (Redesign-Linie) schickte zudem keine Anfrage an den Server: Der
+  Kern hält jeden nicht vom Server geladenen Eintrag für neu, und Backbone
+  löscht neue Modelle nur lokal – die Mitgliedschaft blieb bestehen, ohne
+  Meldung. Jetzt geht das DELETE wirklich an den Server.
+- Bestätigungsdialoge (Mitglied entfernen, Gruppe verlassen, eigene Rolle
+  ändern) zeigten Namen doppelt maskiert (`Probe &amp; Team`).
+- „Als CSV importieren“ ist per Tastatur erreichbar (Enter/Leertaste öffnen
+  die Dateiauswahl).
+- Eine gehaltene Leertaste auf einer Aktion öffnet nicht mehr mehrere
+  Bestätigungsdialoge übereinander.
+- Mitgliederzeilen werden über die Nutzerkennung statt über ihre Position
+  angesprochen. Traf die Mitgliederliste ein, während der Server das
+  Verlassen noch bearbeitete, verschwand sonst die Zeile eines anderen
+  Mitglieds aus der Anzeige, und die eigene Zeile fehlte, wenn das Verlassen
+  scheiterte (etwa als letzter Gruppenverwalter).
+- Die übersetzten Handlebars-Vorlagen sind einheitlich mit LF-Zeilenenden
+  in den Zeichenketten übersetzt (vorher sechs Dateien mit CRLF); nur
+  Leerraum im erzeugten HTML, kein Verhaltensunterschied.
+- Unit-Tests liefen auf main mit 24 Fehlern (PageControllerTest übergab seit
+  dem canCreateGroups-Fix 8 statt 9 Konstruktorargumente); dazu neue Tests
+  für canCreateGroups und die Einschränkung auf eigene Gruppen.
+
+## [0.10.4] - 2026-09-07
+
+### Fixed
+
+- Barrierefreiheit: Gruppenzeilen, Umbenennen und Löschen sind per Tastatur
+  bedienbar (tabindex an den Zeilen, Enter/Leertaste), Symbol-Knöpfe haben
+  einen zugänglichen Namen, der Löschen-Knopf verwies auf eine nicht
+  vorhandene Zeichenkette (Name leer), Tabellenköpfe mit scope="col".
+
+## [0.10.3] - 2026-09-07
+
+### Fixed
+
+- Gruppenverwaltung wieder benutzbar: sechs übersetzte Handlebars-Vorlagen
+  fehlten im Baum, und PageController::index() gab canCreateGroups nicht an
+  die Vorlage weiter – das Anlegeformular fehlte auf der App-Seite immer.
+
 ## [0.10.2] - 2026-08-13
 
 ### Changed

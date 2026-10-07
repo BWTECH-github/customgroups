@@ -54,6 +54,18 @@ OC.L10N.register(
     "\"%1$s\" assigned the \"%3$s\" role for the group \"%2$s\" to you." : "\"%1$s\" hat die \"%3$s\" - Rolle der Gruppe \"%2$s\" dir zugewiesen.",
     "Unknown role" : "Unbekannte Rolle",
     "Only group admins are allowed to create custom groups" : "Nur Gruppen-Administratoren sind berechtigt benutzerdefinierte Gruppen zu erstellen",
-    "Allow creating multiple groups with the same name" : "Das Erstellen von mehreren Gruppen mit dem selben Namen erlauben"
+    "Allow creating multiple groups with the same name" : "Das Erstellen von mehreren Gruppen mit dem selben Namen erlauben",
+    "No users found" : "Keine Benutzer gefunden",
+    "Could not add the following users: {users}" : "Folgende Benutzer konnten nicht hinzugefügt werden: {users}",
+    "Are you sure that you want to change your own permissions for the group \"{name}\" ?" : "Bist du sicher, dass du deine eigenen Berechtigungen für die Gruppe „{name}“ ändern möchtest?",
+    "Confirm role change" : "Rollenänderung bestätigen",
+    "The following users were not imported" : "Die folgenden Benutzer wurden nicht importiert",
+    "All users were imported successfully" : "Alle Benutzer wurden erfolgreich importiert",
+    "CSV import failed" : "CSV-Import fehlgeschlagen",
+    "Cannot change role without another administrator" : "Die Rolle kann nicht ohne einen weiteren Administrator geändert werden",
+    "Could not change role" : "Rolle konnte nicht geändert werden",
+    "Member (Guest)" : "Benutzer (Gast)",
+    "Export as CSV" : "Als CSV exportieren",
+    "Import as CSV" : "Als CSV importieren"
 },
 "nplurals=2; plural=(n != 1);");

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.2] - 2026-10-07
+
+### Fixed
+
+- Sprache: Beim Hinzufügen von Mitgliedern fragte die Eingabe „Add multiple users and guests“, „No users found“ und „Could not add the following users: {users}“ im Kernkatalog ab, der diese Texte nicht kennt – Vorschlagszeile, Hinweis und Fehlermeldung standen englisch. Sie kommen jetzt aus dem Katalog der App („Keine Benutzer gefunden“ statt „Keine Anwender gefunden“).
+- Anrede: Der Bestätigungsdialog beim Ändern der eigenen Rolle siezte im Du-Katalog (de), „Your role“ duzte im Sie-Katalog (de_DE). Titel jetzt „Rollenänderung bestätigen“.
+- de_CH: zwölf genutzte Texte ergänzt (u. a. Dialog „Rollenänderung bestätigen“, „Als CSV exportieren/importieren“, „Benutzer (Gast)“), Schweizer Schreibung ohne ß.
+- Aus main 0.10.5 übernommen: „Gruppe verlassen“ vor dem Laden der Liste schickt wirklich ein DELETE an den Server; übersetzte Vorlagen mit LF-Zeilenenden.
+
 ## [1.0.1] - 2026-09-23
 
 ### Fixed

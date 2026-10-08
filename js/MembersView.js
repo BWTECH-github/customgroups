@@ -183,8 +183,16 @@
 						// asynchron. Wer sofort auf "Verlassen" klickt, hat dort
 						// noch keinen eigenen Eintrag; ohne Ersatzmodell brach der
 						// Klick mit "reading 'destroy'" ab.
-						var currentUserMembership = self.collection.get(userId) ||
-							self.collection.add({id: userId}, {silent: true});
+						var currentUserMembership = self.collection.get(userId);
+						if (!currentUserMembership) {
+							currentUserMembership = self.collection.add({id: userId}, {silent: true});
+							// Der Kern hält jeden nicht vom Server geladenen Knoten
+							// für neu (WebdavNode.isNew), und Backbone löscht neue
+							// Modelle nur lokal, ohne Anfrage. Ohne diese Markierung
+							// ginge kein DELETE an den Server: Die Mitgliedschaft
+							// bliebe bestehen, und niemand erführe davon.
+							currentUserMembership._isNew = false;
+						}
 						currentUserMembership.destroy({
 							wait: true,
 							error: function(model, response) {
@@ -211,10 +219,30 @@
 			this._postProcessRow($el, model);
 		},
 
+		/**
+		 * Zeile eines Mitglieds, über seine Kennung statt über seinen Index in
+		 * der Sammlung: Der Platzhalter beim Verlassen (siehe _onClickLeaveGroup)
+		 * hat keine Zeile. Trifft die Mitgliederliste ein, bevor der Server das
+		 * Verlassen bestätigt, zeigte sein Index auf die Zeile eines anderen
+		 * Mitglieds.
+		 *
+		 * @param {OCA.CustomGroups.MemberModel} model Mitglied
+		 * @return {jQuery} Zeile oder leere Auswahl
+		 */
+		_findRow: function(model) {
+			return this.$container.find('.group-member').filterAttr('data-id', String(model.id));
+		},
+
 		_onChangeModel: function(model) {
 			var $el = $(this.itemTemplate(this._formatMember(model)));
-			var index = this.collection.indexOf(model);
-			this.$container.children().eq(index).replaceWith($el);
+			var $row = this._findRow(model);
+			if ($row.length) {
+				$row.replaceWith($el);
+			} else {
+				// noch keine Zeile: die geladene Mitgliedschaft ist gerade in
+				// den Platzhalter eingeflossen
+				this.$container.append($el);
+			}
 			this._postProcessRow($el, model);
 		},
 
@@ -228,14 +256,8 @@
 			}
 		},
 
-		_onRemoveMember: function(model, collection, options) {
-			var $memberEl;
-			if (_.isNumber(options.index)) {
-				$memberEl = this.$('.grid .group-member:nth-child(' + (options.index + 1) + ')');
-			} else {
-				$memberEl = this.$('.grid .group-member').filterAttr('data-id', model.id);
-			}
-			$memberEl.remove();
+		_onRemoveMember: function(model) {
+			this._findRow(model).remove();
 		},
 
 		_onAddMember: function(data) {

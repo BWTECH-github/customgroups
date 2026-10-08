@@ -130,12 +130,12 @@
 								failedBatch: res.notFound,
 								displayName: labelArray.join(', '),
 								userId: labelArray.join(', '),
-								typeInfo: t('core', 'Add multiple users and guests')
+								typeInfo: t('customgroups', 'Add multiple users and guests')
 							}
 						});
 					}
 
-					self._displayError(t('core', 'No users found'));
+					self._displayError(t('customgroups', 'No users found'));
 					return response();
 				})
 			}
@@ -214,7 +214,7 @@
 			if (s.item.failedBatch && s.item.failedBatch.length) {
 				var failedUsersStr = s.item.failedBatch.join(', ');
 				OC.Notification.show(
-					t('core', 'Could not add the following users: {users}', {users: failedUsersStr}),
+					t('customgroups', 'Could not add the following users: {users}', {users: failedUsersStr}),
 					{type: 'error'}
 				);
 			}

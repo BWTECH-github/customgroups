@@ -283,6 +283,103 @@ describe('MembersView test', function() {
 
 				expect(currentUserModel.destroy.notCalled).toEqual(true);
 			});
+			it('leaves group even if the own membership is not loaded yet', function() {
+				// Die Mitgliederliste lädt asynchron; ohne eigenen Eintrag brach
+				// der Klick früher mit "reading 'destroy'" ab.
+				collection.remove('currentUser');
+				var destroyStub = sinon.stub(OCA.CustomGroups.MemberModel.prototype, 'destroy');
+				try {
+					view.$('.action-leave-group').click();
+					confirmStub.yield(true);
+
+					expect(destroyStub.calledOnce).toEqual(true);
+					expect(destroyStub.getCall(0).thisValue.id).toEqual('currentUser');
+				} finally {
+					destroyStub.restore();
+				}
+			});
+			describe('list arrives while the server still processes leaving', function() {
+				// Beim Öffnen der Leiste ist die Liste noch nicht geladen: Der
+				// Platzhalter aus _onClickLeaveGroup hat keine Zeile. Trifft die
+				// Liste vor der Antwort auf das Verlassen ein, fließt der eigene
+				// Eintrag in den Platzhalter; die Antwort darf dann keine fremde
+				// Zeile treffen (früher: Index des Platzhalters = erste Zeile).
+				var syncStub;
+				var notificationStub;
+
+				beforeEach(function() {
+					collection.reset([], {silent: true});
+					view.render();
+					syncStub = sinon.stub(OCA.CustomGroups.MemberModel.prototype, 'sync');
+					notificationStub = sinon.stub(OC.Notification, 'showTemporary');
+
+					view.$('.action-leave-group').click();
+					confirmStub.yield(true);
+
+					collection.set([
+						{id: 'currentUser', userDisplayName: 'Current User', role: OCA.CustomGroups.ROLE_ADMIN},
+						{id: 'anotherAdmin', userDisplayName: 'Another Admin', role: OCA.CustomGroups.ROLE_ADMIN},
+						{id: 'anotherMember', userDisplayName: 'Another Member', role: OCA.CustomGroups.ROLE_MEMBER}
+					]);
+				});
+				afterEach(function() {
+					syncStub.restore();
+					notificationStub.restore();
+				});
+
+				it('sends the DELETE for the not yet loaded membership', function() {
+					// Ein neu angelegtes Modell löscht Backbone nur lokal, ohne
+					// Anfrage; der Platzhalter muss als vom Server stammend gelten.
+					expect(syncStub.calledOnce).toEqual(true);
+					expect(syncStub.getCall(0).args[0]).toEqual('delete');
+					expect(syncStub.getCall(0).args[1].id).toEqual('currentUser');
+				});
+				it('renders the own row once the list has loaded', function() {
+					expect(view.$('.group-member').length).toEqual(3);
+					expect(view.$('.group-member').filterAttr('data-id', 'currentUser').length).toEqual(1);
+				});
+				it('removes only the own row when leaving succeeds', function() {
+					syncStub.getCall(0).args[2].success({});
+
+					expect(view.$('.group-member').length).toEqual(2);
+					expect(view.$('.group-member').filterAttr('data-id', 'currentUser').length).toEqual(0);
+					expect(view.$('.group-member').filterAttr('data-id', 'anotherAdmin').length).toEqual(1);
+					expect(view.$('.group-member').filterAttr('data-id', 'anotherMember').length).toEqual(1);
+				});
+				it('keeps all rows when leaving fails', function() {
+					syncStub.getCall(0).args[2].error({status: 403});
+
+					expect(notificationStub.calledOnce).toEqual(true);
+					expect(view.$('.group-member').length).toEqual(3);
+					expect(view.$('.group-member').filterAttr('data-id', 'currentUser').length).toEqual(1);
+				});
+			});
+			it('does not escape the group name twice in the confirmation', function() {
+				// OC.dialogs maskiert die Meldung selbst.
+				model.set({displayName: 'Probe & Team'});
+				view.$('.action-leave-group').click();
+
+				expect(confirmStub.getCall(0).args[0]).toContain('"Probe & Team"');
+			});
+		});
+
+		describe('importing members', function() {
+			it('opens the file selection with Enter or Space on the import button', function() {
+				var clickSpy = sinon.spy();
+				view.$('#custom-group-import-elem').on('click', function(ev) {
+					// kein echter Dateidialog im Testbrowser
+					ev.preventDefault();
+					clickSpy();
+				});
+				var $label = view.$('.custom-group-import-label');
+
+				expect($label.attr('tabindex')).toEqual('0');
+				$label.trigger($.Event('keydown', {keyCode: 13}));
+				$label.trigger($.Event('keydown', {keyCode: 32}));
+				$label.trigger($.Event('keydown', {keyCode: 65}));
+
+				expect(clickSpy.calledTwice).toEqual(true);
+			});
 		});
 
 		describe('deleting members', function() {

@@ -10,8 +10,30 @@
 	vertical-align: middle;
 }
 
-#customgroups .grid tr {
-	line-height: 50px;
+/* Der Kern vererbt an Tabellen white-space: nowrap; lange Gruppen- und
+   Mitgliedsnamen brechen hier um, statt die Rollenspalte aus dem Fenster zu
+   schieben (320–390 px) oder „…“ zu zeigen. Die Zeile bleibt mindestens
+   50 px hoch, mehrzeilige Namen bekommen normalen Zeilenabstand. */
+#customgroups .grid {
+	white-space: normal;
+}
+
+#customgroups .grid td,
+#customgroups .grid th {
+	height: 50px;
+	line-height: 1.4;
+	overflow-wrap: anywhere;
+}
+
+/* Rückfall, falls eine Spalte trotzdem nicht passt: die Liste rollt in
+   ihrem eigenen Bereich, nicht die ganze Seite. */
+#customgroups .groups-container,
+#customgroups .members-container {
+	overflow-x: auto;
+}
+
+#customgroups .group-name-title-display {
+	overflow-wrap: anywhere;
 }
 
 #customgroups .avatar-column {
@@ -67,10 +89,7 @@
 }
 
 #customgroups .group-member-list .user-display-name {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-	max-width: 1px;
+	overflow-wrap: anywhere;
 }
 
 #customgroups .loading-list {
@@ -86,11 +105,10 @@
 }
 
 .customgroups-autocomplete-item .autocomplete-item-text {
+	min-width: 0;
 	margin-left: 10px;
 	margin-right: 10px;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
+	overflow-wrap: anywhere;
 	vertical-align: middle;
 }
 

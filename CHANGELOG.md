@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.3] - 2026-10-08
+
+### Behoben
+
+- Gruppenliste und Mitgliederliste: Namen brechen um, statt mit „…“ zu enden
+  (Mitglieder) oder die Spalte „Deine Rolle“ bei 320–390 px aus dem Fenster
+  zu schieben (Gruppen; der Kern vererbt an Tabellen white-space: nowrap).
+  Zeilen bleiben mindestens 50 px hoch; passt eine Spalte trotzdem nicht,
+  rollt die Liste in ihrem eigenen Bereich.
+- Vorschläge beim Hinzufügen eines Mitglieds und der Gruppenname im Kopf der
+  Mitgliederliste brechen um.
+
 ## [1.0.2] - 2026-10-07
 
 ### Fixed

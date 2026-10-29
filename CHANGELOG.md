@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Behoben
 
-- Mitglied hinzufügen: Enter übernimmt nur Treffer zum aktuellen Suchtext.
+- Mitglied hinzufügen: Enter übernimmt nur Treffer zum aktuellen Suchtext;
+  vorhandene Gastkonten stehen in den Vorschlägen als Gast.
 - Mitglieder-Leiste: gültige ARIA-Rollen, Vorschlagsliste als
   Kombinationsfeld; beim Öffnen stehen Fokus und Ansicht in der Leiste,
   Escape schließt sie, der Fokus kehrt zur Gruppe zurück.

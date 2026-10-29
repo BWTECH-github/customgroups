@@ -186,6 +186,38 @@ class PageControllerTest extends \Test\TestCase {
 		], $data['results']);
 	}
 
+	/**
+	 * Vorhandene Gastkonten tragen in den Vorschlägen den Typ „guest“ –
+	 * die Mitgliederliste zeigt sie als „Mitglied (Gast)“, die Vorschläge
+	 * sollen nicht „Benutzer“ dazu sagen. Eine Abfrage für alle Treffer.
+	 */
+	public function testSearchMarksExistingGuests(): void {
+		$user1 = $this->makeUser('user1', 'User One');
+		$guest = $this->makeUser('gast@example.com', 'Gast Eins');
+
+		$this->config->method('getAppValue')
+			->willReturnMap([
+				['core', 'shareapi_only_share_with_group_members', 'no', 'no'],
+				['core', 'shareapi_allow_share_dialog_user_enumeration', 'yes', 'yes'],
+				['core', 'shareapi_share_dialog_user_enumeration_group_members', 'no', 'no'],
+			]);
+		$this->config->expects($this->once())
+			->method('getUserValueForUsers')
+			->with('owncloud', 'isGuest', ['user1', 'gast@example.com'])
+			->willReturn(['user1' => '0', 'gast@example.com' => '1']);
+
+		$this->handler->method('getGroupByUri')->willReturn(['group_id' => 128]);
+		$this->handler->method('getGroupMembers')->willReturn([]);
+		$this->userManager->method('find')->willReturn([$user1, $guest]);
+
+		$data = $this->pageController->searchUsers('group1', '', 200)->getData();
+
+		self::assertEquals([
+			['userId' => 'user1', 'displayName' => 'User One', 'type' => 'user'],
+			['userId' => 'gast@example.com', 'displayName' => 'Gast Eins', 'type' => 'guest'],
+		], $data['results']);
+	}
+
 	public function testSearchAllUsersLimit(): void {
 		$allUsers = [];
 

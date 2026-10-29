@@ -295,11 +295,17 @@ class PageController extends Controller {
 			$results = $this->searchForNewMembers($groupInfo['group_id'], $pattern, $limit, !$shareeEnumeration);
 		}
 
-		$results = \array_map(function (IUser $entry) {
+		// Vorhandene Gastkonten als Gast kennzeichnen (die Mitgliederliste
+		// sagt „Mitglied (Gast)“); eine Abfrage für alle Treffer
+		$uids = \array_map(static function (IUser $entry) {
+			return $entry->getUID();
+		}, $results);
+		$gaeste = $uids === [] ? [] : $this->config->getUserValueForUsers('owncloud', 'isGuest', $uids);
+		$results = \array_map(function (IUser $entry) use ($gaeste) {
 			return [
 				'userId' => $entry->getUID(),
 				'displayName' => $entry->getDisplayName(),
-				'type' => 'user'
+				'type' => !empty($gaeste[$entry->getUID()]) ? 'guest' : 'user'
 			];
 		}, $results);
 

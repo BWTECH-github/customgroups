@@ -72,6 +72,53 @@
 				select: _.bind(this._onSelect, this)
 			}).data('ui-autocomplete')._renderItem = _.bind(this.autocompleteRenderItem, this);
 
+			// Rollen wie im Teilen-Dialog des Kerns: Eingabe = Kombinationsfeld,
+			// Liste = listbox. jQuery UI 1.10 vergibt Eintragsrollen nur, wenn
+			// das Menü selbst die Rolle listbox kennt (dann role=option an den
+			// Ankern); sonst standen li mit role=presentation in einer ul ohne
+			// Rolle, und die Eingabe war mit der Liste nicht verbunden.
+			var $field = this.$field;
+			var $menue = $field.autocomplete('widget');
+			$menue.menu('option', 'role', 'listbox').attr('role', 'listbox');
+			if (!$menue.attr('id')) {
+				$menue.uniqueId();
+			}
+			$field.attr({
+				role: 'combobox',
+				'aria-autocomplete': 'list',
+				'aria-expanded': 'false',
+				'aria-controls': $menue.attr('id')
+			});
+			var aktivMelden = function() {
+				var $aktiv = $menue.find('.ui-state-focus');
+				if ($aktiv.length && $aktiv.attr('id')) {
+					$field.attr('aria-activedescendant', $aktiv.attr('id'));
+				} else {
+					$field.removeAttr('aria-activedescendant');
+				}
+			};
+			$field.on('autocompleteopen', function() {
+				$field.attr('aria-expanded', 'true');
+				aktivMelden();
+			});
+			$field.on('autocompleteclose', function() {
+				$field.attr('aria-expanded', 'false').removeAttr('aria-activedescendant');
+			});
+			$field.on('keyup', aktivMelden);
+			// Bis die Antwort zum neuen Suchtext da ist (delay), zeigte jQuery
+			// UI die alte Liste mit markiertem ersten Eintrag weiter – ein
+			// schnelles Enter fügte so jemanden hinzu, nach dem gar nicht
+			// gesucht wurde. Veraltete Listen werden beim Tippen geschlossen.
+			$field.on('input', function() {
+				var ac = $field.data('ui-autocomplete');
+				if (ac && ac.term !== $field.val() && $menue.is(':visible')) {
+					$field.autocomplete('close');
+					// sonst sucht jQuery UI nicht neu, wenn der Text wieder genau
+					// dem zuletzt gesuchten entspricht – die Liste bliebe zu
+					ac.term = null;
+				}
+			});
+
 			// Beim Hineinklicken sofort alle Benutzer zeigen: jQuery UI oeffnet
 			// das Menue von sich aus erst nach einem Tastendruck. search()
 			// umgeht dabei die 750-ms-Verzoegerung.

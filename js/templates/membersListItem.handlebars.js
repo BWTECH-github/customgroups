@@ -36,10 +36,8 @@ templates['membersListItem'] = template({"1":function(container,depth0,helpers,p
 
   return "<tr class=\"group-member\" data-id=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":4,"column":34},"end":{"line":4,"column":40}}}) : helper)))
-    + "\" tabindex=\"0\">\n	<td class=\"avatar-column\"><div class=\"avatar\" aria-hidden=\"true\"></div></td>\n	<td class=\"user-display-name\" title=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"displayName") || (depth0 != null ? lookupProperty(depth0,"displayName") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"displayName","hash":{},"data":data,"loc":{"start":{"line":7,"column":38},"end":{"line":7,"column":53}}}) : helper)))
-    + "\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"displayName") || (depth0 != null ? lookupProperty(depth0,"displayName") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"displayName","hash":{},"data":data,"loc":{"start":{"line":7,"column":55},"end":{"line":7,"column":70}}}) : helper)))
+    + "\" tabindex=\"0\">\n	<td class=\"avatar-column\"><div class=\"avatar\" aria-hidden=\"true\"></div></td>\n	<td class=\"user-display-name\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"displayName") || (depth0 != null ? lookupProperty(depth0,"displayName") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"displayName","hash":{},"data":data,"loc":{"start":{"line":7,"column":31},"end":{"line":7,"column":46}}}) : helper)))
     + "</td>\n	<td><span class=\"role-display-name\">"
     + alias4(((helper = (helper = lookupProperty(helpers,"roleDisplayName") || (depth0 != null ? lookupProperty(depth0,"roleDisplayName") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"roleDisplayName","hash":{},"data":data,"loc":{"start":{"line":8,"column":37},"end":{"line":8,"column":56}}}) : helper)))
     + "</span>\n"

@@ -19,6 +19,17 @@
 		/** @lends OCA.CustomGroups.MembersView.prototype */ {
 		sync: OC.Backbone.davSync,
 
+		/**
+		 * Aufgerufen wird mit dem Gruppenmodell selbst. Backbone liest aus dem
+		 * ersten Argument „id“ und „attributes“ und schrieb so href,
+		 * displayname, role="admin" und die Gruppenkennung (mit Leerzeichen)
+		 * als Attribute an das Element der Leiste. Deshalb nur {model}
+		 * weiterreichen.
+		 */
+		constructor: function(model) {
+			OC.Backbone.View.call(this, {model: model});
+		},
+
 		events: {
 			'click .close': '_onClose',
 			'click .action-delete-member': '_onDeleteMember',
@@ -27,6 +38,31 @@
 			'change #custom-group-import-elem': '_onChangeCsvInput',
 			'keydown a[role="button"]': '_onActionKeyDown',
 			'keydown .custom-group-import-label': '_onImportKeyDown',
+			'keydown': '_onKeyDown'
+		},
+
+		/**
+		 * Escape schließt die Leiste. Eine offene Vorschlagsliste schließt
+		 * jQuery UI zuerst und markiert den Tastendruck als verbraucht.
+		 */
+		_onKeyDown: function(ev) {
+			if (ev.keyCode !== 27 || ev.isDefaultPrevented()) {
+				return;
+			}
+			if ($('.oc-dialog:visible').length) {
+				return;
+			}
+			ev.preventDefault();
+			this.trigger('close');
+		},
+
+		/**
+		 * Fokus in die Leiste setzen (Gruppenname), damit Tastatur und
+		 * Sprachausgabe dort weitermachen; das Fokussieren rollt die Leiste
+		 * auch in schmalen Fenstern, wo sie unter der Liste steht, ins Bild.
+		 */
+		focusHeader: function() {
+			this.$('.group-name-title-display').attr('tabindex', '-1').focus();
 		},
 
 		/**
@@ -44,7 +80,8 @@
 			return false;
 		},
 
-		initialize: function(model) {
+		initialize: function(options) {
+			var model = options.model;
 			this.model = model;
 			this.collection = model.getChildrenCollection();
 
@@ -84,7 +121,21 @@
 			this.collection.off('remove', this._onRemoveMember, this);
 			this.model.off('change:displayName', this._renderHeader, this);
 
+			this._tooltipsEntfernen(this.$el);
 			this.$el.remove();
+		},
+
+		/**
+		 * Die Tooltips der Zeilen hängen am <body> (container: 'body'). Wird
+		 * ein Element entfernt, während sein Tooltip steht oder noch
+		 * verzögert erscheint, blieb er sonst dauerhaft über der Seite stehen
+		 * (z. B. „Rolle auf … ändern“ nach dem Rollenwechsel). destroy
+		 * bricht auch ein noch ausstehendes Einblenden ab.
+		 *
+		 * @param {jQuery} $bereich Element(e), deren Tooltips weg sollen
+		 */
+		_tooltipsEntfernen: function($bereich) {
+			$bereich.find('[data-original-title]').addBack('[data-original-title]').tooltip('destroy');
 		},
 
 		_toggleLoading: function(state) {
@@ -143,6 +194,13 @@
 				data: file
 			}).done(function (result) {
 				$('#custom-group-import-elem').val(null);
+
+				// Keine verwertbare Zeile (erwartet: Benutzer,Rolle) – das ist
+				// kein Erfolg, auch wenn der Server nichts abgelehnt hat.
+				if ($.isEmptyObject(result)) {
+					OC.Notification.showTemporary(t('customgroups', 'CSV import failed'));
+					return;
+				}
 
 				var failedUsers = [];
 
@@ -237,6 +295,7 @@
 			var $el = $(this.itemTemplate(this._formatMember(model)));
 			var $row = this._findRow(model);
 			if ($row.length) {
+				this._tooltipsEntfernen($row);
 				$row.replaceWith($el);
 			} else {
 				// noch keine Zeile: die geladene Mitgliedschaft ist gerade in
@@ -257,7 +316,9 @@
 		},
 
 		_onRemoveMember: function(model) {
-			this._findRow(model).remove();
+			var $row = this._findRow(model);
+			this._tooltipsEntfernen($row);
+			$row.remove();
 		},
 
 		_onAddMember: function(data) {
@@ -360,7 +421,7 @@
 
 			function action(rerender) {
 				$target.next('.loading').removeClass('hidden');
-				$target.tooltip('hide').remove();
+				$target.tooltip('destroy').remove();
 				// swap permissions
 				var newRole = (model.get('role') === OCA.CustomGroups.ROLE_ADMIN) ?
 					OCA.CustomGroups.ROLE_MEMBER :

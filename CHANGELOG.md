@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.4] - 2026-10-29
+
+### Behoben
+
+- Mitglied hinzufügen: Enter übernimmt nur Treffer zum aktuellen Suchtext.
+- Mitglieder-Leiste: gültige ARIA-Rollen, Vorschlagsliste als
+  Kombinationsfeld; beim Öffnen stehen Fokus und Ansicht in der Leiste,
+  Escape schließt sie, der Fokus kehrt zur Gruppe zurück.
+- Tooltips verschwinden mit ihrem Element.
+- CSV-Import ohne gültige Zeile meldet einen Fehler.
+- Rollenbezeichnungen werden nicht mitten im Wort getrennt.
+
 ## [1.0.3] - 2026-10-08
 
 ### Behoben

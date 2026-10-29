@@ -36,6 +36,21 @@
 	overflow-wrap: anywhere;
 }
 
+/* Rollen („Gruppenbesitzer“) nicht mitten im Wort trennen – umbrechen
+   dürfen nur die Namen. */
+#customgroups .grid td.role-display-name,
+#customgroups .grid .role-display-name,
+#customgroups .group-member-list td:nth-child(3) {
+	overflow-wrap: normal;
+	white-space: nowrap;
+}
+
+/* per Skript fokussierter Gruppenname der Mitglieder-Leiste */
+#customgroups .group-name-title-display:focus-visible {
+	outline: 2px solid var(--oco-teal-ink, #00806b);
+	outline-offset: 2px;
+}
+
 #customgroups .avatar-column {
 	width: 32px;
 	padding-right: 0;

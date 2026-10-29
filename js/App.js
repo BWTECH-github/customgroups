@@ -61,13 +61,21 @@
 
 				this.membersView.render();
 				this.membersView.on('close', this._onClickClose, this);
+				// Die Leiste steht unter der Liste; ohne Fokuswechsel blieb
+				// sie in schmalen Fenstern unsichtbar unterhalb des Bildes.
+				this.membersView.focusHeader();
 			} else {
 				OC.Apps.hideAppSidebar(this.$membersContainer);
 			}
 		},
 
 		_onClickClose: function() {
+			var gruppe = this.listView._selected;
 			this.listView.select(null);
+			// Fokus zurück an die Zeile, aus der die Leiste geöffnet wurde
+			if (gruppe) {
+				this.listView.$('.group').filterAttr('data-id', gruppe.id).focus();
+			}
 			return false;
 		},
 

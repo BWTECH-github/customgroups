@@ -23,7 +23,7 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	<repository type="git">https://github.com/BWTECH-github/customgroups.git</repository>
 	<licence>AGPL</licence>
 	<author>BW-Tech GmbH</author>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<documentation>
     		<user>https://github.com/BWTECH-github/customgroups#readme</user>
 		<admin>https://github.com/BWTECH-github/customgroups#readme</admin>
@@ -35,7 +35,7 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	</types>
 	<use-migrations>true</use-migrations>
 	<dependencies>
-		<owncloud min-version="11" max-version="11.99" />
+		<owncloud min-version="11.1" max-version="11.99" />
 		<php min-version="8.4" />
 	</dependencies>
 	<sabre>

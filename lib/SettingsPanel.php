@@ -85,6 +85,6 @@ class SettingsPanel implements ISettings {
 			}
 		}
 
-		return 'customgroups';
+		return 'sharing';
 	}
 }

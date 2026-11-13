@@ -23,7 +23,7 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 	<repository type="git">https://github.com/BWTECH-github/customgroups.git</repository>
 	<licence>AGPL</licence>
 	<author>BW-Tech GmbH</author>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<documentation>
     		<user>https://github.com/BWTECH-github/customgroups#readme</user>
 		<admin>https://github.com/BWTECH-github/customgroups#readme</admin>
@@ -52,7 +52,4 @@ Sharing with a Custom Group is as easy and quick as always. Just click on the sh
 		<admin>OCA\CustomGroups\AdminPanel</admin>
 		<personal>OCA\CustomGroups\SettingsPanel</personal>
 	</settings>
-	<settings-sections>
-		<personal>OCA\CustomGroups\SettingsSection</personal>
-	</settings-sections>
 </info>

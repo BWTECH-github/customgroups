@@ -51,7 +51,7 @@ class SettingsPanelTest extends \Test\TestCase {
 	}
 
 	public function testGetSection() {
-		self::assertEquals('customgroups', $this->panel->getSectionID());
+		self::assertEquals('sharing', $this->panel->getSectionID());
 	}
 
 	public function testGetPriority() {

@@ -19,6 +19,10 @@ class Version20161209151129 implements ISchemaMigration {
 	}
 
 	private function createGroupsTable($prefix, Schema $schema) {
+		// Altbestand oder halb gelaufene Erstinstallation (MySQL-DDL ist nicht transaktional)
+		if ($schema->hasTable("{$prefix}custom_group")) {
+			return;
+		}
 		$table = $schema->createTable("{$prefix}custom_group");
 		$table->addColumn('group_id', 'bigint', [
 			'autoincrement' => true,
@@ -40,6 +44,9 @@ class Version20161209151129 implements ISchemaMigration {
 	}
 
 	private function createMembersTable($prefix, Schema $schema) {
+		if ($schema->hasTable("{$prefix}custom_group_member")) {
+			return;
+		}
 		$table = $schema->createTable("{$prefix}custom_group_member");
 		$table->addColumn('group_id', 'bigint', [
 			'unsigned' => true,

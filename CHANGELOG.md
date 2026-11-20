@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.7] - 2026-11-20
+
+Redesign-Linie: übernimmt aus main 0.10.6.
+
+### Behoben
+- Neuinstallation über Alttabellen (`oc_custom_group`, `oc_custom_group_member`) oder nach einer halb gelaufenen Erstinstallation brach mit „table already exists“ ab. Die Migration legt nur noch fehlende Tabellen an.
+
 ## [1.0.6] - 2026-11-13
 
 ### Geändert

@@ -4,10 +4,38 @@
 	display: inline-block;
 }
 
-#customgroups .group-name-title a,
-#customgroups .grid td a {
-	visibility: hidden;
+/* Zeilenaktionen: in Ruhe unsichtbar, unter Zeiger und Fokus sichtbar.
+   opacity statt visibility: ein Element mit visibility: hidden nimmt keinen
+   Fokus an. Erreichbar waren die Aktionen deshalb nur über eine fokussierbare
+   Zeile ohne Namen, und Umschalt+Tab sprang über sie hinweg. Die Regeln
+   wiegen mehr als `tr .action` aus core/css/styles.css. */
+#customgroups .grid td a.icon,
+#customgroups .grid td a.action {
+	opacity: 0;
 	vertical-align: middle;
+}
+
+#customgroups .grid tr:hover td a.icon,
+#customgroups .grid tr:hover td a.action,
+#customgroups .grid tr:focus-within td a.icon,
+#customgroups .grid tr:focus-within td a.action {
+	opacity: 1;
+}
+
+/* Ohne Zeiger (Berührung) gibt es kein Überfahren: dort stehen die Aktionen
+   immer da, sonst träfe ein Tippen einen unsichtbaren Knopf. */
+@media (hover: none) {
+	#customgroups .grid td a.icon,
+	#customgroups .grid td a.action {
+		opacity: 1;
+	}
+}
+
+/* Der Gruppenname ist der Knopf, der die Mitglieder zeigt; er sieht aus wie
+   der Name, nicht wie ein Verweis. */
+#customgroups .grid td.display-name a.group-display-name {
+	color: inherit;
+	text-decoration: none;
 }
 
 /* Der Kern vererbt an Tabellen white-space: nowrap; lange Gruppen- und
@@ -58,15 +86,6 @@
 
 #customgroups .grid .select > * {
 	cursor: pointer;
-}
-
-#customgroups .group-name-title:hover a,
-#customgroups .grid tr:hover td a,
-#customgroups .group-name-title a:focus,
-#customgroups .group-name-title:focus-within a,
-#customgroups .grid td a:focus,
-#customgroups .grid tr:focus-within td a {
-	visibility: visible;
 }
 
 #customgroups .sidebar {

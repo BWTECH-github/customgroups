@@ -32,7 +32,6 @@
 			'keyup form.group-rename-form>input': '_onCancelRename',
 			'blur form.group-rename-form>input': '_onBlurRename',
 			'click .select': '_onSelect',
-			'keydown .select': '_onSelectKeyDown',
 			'click .action-rename-group': '_onRenameGroup',
 			'click .action-delete-group': '_onDeleteGroup',
 			'keydown a[role="button"]': '_onActionKeyDown'
@@ -99,6 +98,14 @@
 			$displayName.removeClass('hidden');
 			$groupEl.removeClass('renaming');
 
+			// Nach Enter oder Escape stand der Fokus auf <body>, der nächste Tab
+			// begann am Seitenanfang. Er geht an den Namen der Zeile zurück; wer
+			// das Feld mit Tab verlässt, behält sein neues Ziel.
+			if (this._fokusNachUmbenennen) {
+				this._fokusNachUmbenennen = false;
+				$displayName.find('.group-display-name').focus();
+			}
+
 			if (!model) {
 				return false;
 			}
@@ -138,6 +145,7 @@
 				ev.preventDefault();
 				var $field = this.$renameForm.find('input');
 				// restore old value
+				this._fokusNachUmbenennen = true;
 				$field.val($field.attr('data-old-value')).blur();
 			}
 		},
@@ -147,6 +155,7 @@
 			// Das Absenden unterband bisher nebenbei der Anlege-Handler; ohne ihn
 			// würde das Formular die Seite neu laden.
 			ev.preventDefault();
+			this._fokusNachUmbenennen = true;
 			this.$renameForm.find('input').blur();
 			return false;
 		},
@@ -250,27 +259,6 @@
 			return false;
 		},
 
-		/**
-		 * Wählt die Gruppe aus, wenn die Zeile selbst den Tastaturfokus hat.
-		 */
-		_onSelectKeyDown: function(ev) {
-			// Eine gedrückt gehaltene Taste wiederholt sich; die Auswahl soll
-			// dabei nicht mehrfach ausgelöst werden.
-			if (ev.originalEvent && ev.originalEvent.repeat) {
-				return;
-			}
-			// Tasten aus Kindelementen (Umbenennen-Feld, Aktionen) gehören nicht hierher
-			if (ev.target !== ev.currentTarget) {
-				return;
-			}
-			// 13 = Enter, 32 = Leertaste
-			if (ev.keyCode !== 13 && ev.keyCode !== 32) {
-				return;
-			}
-			ev.preventDefault();
-			this._onSelect(ev);
-		},
-
 		_onSelect: function(ev) {
 			ev.preventDefault();
 			var $el = $(ev.target).closest('.group');
@@ -355,8 +343,15 @@
 		_onChangeModel: function(model) {
 			var $el = $(this.itemTemplate(this._formatItem(model)));
 			var index = this.collection.indexOf(model);
-			this.$container.children().eq(index).replaceWith($el);
+			var $alt = this.$container.children().eq(index);
+			// Lag der Fokus in der alten Zeile (Name nach dem Umbenennen), ginge
+			// er mit ihr verloren; er wandert auf den Namen der neuen Zeile.
+			var fokusInZeile = $alt.length && $.contains($alt.get(0), document.activeElement);
+			$alt.replaceWith($el);
 			this._postProcessRow($el, model);
+			if (fokusInZeile) {
+				$el.find('.group-display-name').focus();
+			}
 		},
 
 
@@ -387,10 +382,25 @@
 				this.trigger('select', null);
 				this._lastActive = null;
 			}
+			// Nach dem Löschen oder Verlassen stand der Fokus sonst auf <body>
+			// (Knopf und Leiste sind weg): er geht an den nächsten Gruppennamen,
+			// sonst an den vorigen, sonst an das Anlegefeld.
+			var aktiv = document.activeElement;
+			var $ziel = $();
+			if (!aktiv || aktiv === document.body || ($groupEl.length && $.contains($groupEl.get(0), aktiv))) {
+				$ziel = $groupEl.next('.group').find('.group-display-name');
+				if (!$ziel.length) {
+					$ziel = $groupEl.prev('.group').find('.group-display-name');
+				}
+				if (!$ziel.length) {
+					$ziel = this.$('[name=groupName]');
+				}
+			}
 			$groupEl.remove();
 			if (!collection.length) {
 				this._updateEmptyState();
 			}
+			$ziel.focus();
 		},
 
 		/**

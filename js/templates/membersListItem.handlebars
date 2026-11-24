@@ -1,7 +1,6 @@
-{{!-- tabindex holt die Zeile in die Tastaturreihenfolge; erst dadurch greift
-      tr:focus-within und die sonst nur bei Maus-Hover sichtbaren Aktionen
-      werden erreichbar --}}
-<tr class="group-member" data-id="{{id}}" tabindex="0">
+{{!-- Die Zeile ist nicht fokussierbar (sie hätte keinen Namen); Tab erreicht
+      die Aktionen selbst, sie blenden sich beim Fokus ein (css/app.css) --}}
+<tr class="group-member" data-id="{{id}}">
 	{{!-- Avatar wiederholt nur den daneben stehenden Namen --}}
 	<td class="avatar-column"><div class="avatar" aria-hidden="true"></div></td>
 	<td class="user-display-name">{{displayName}}</td>

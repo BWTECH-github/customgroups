@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.9] - 2026-11-24
+
+### Behoben
+- Gruppen- und Mitgliederzeilen sind kein Tab-Halt ohne Namen mehr. Der Gruppenname ist ein Knopf, der die Mitglieder zeigt; die Aktionen der Zeilen erreicht Tab vorwärts und rückwärts in derselben Reihenfolge. Auf Geräten ohne Mauszeiger stehen die Aktionen immer da.
+- Nach dem Umbenennen (Enter oder Escape), dem Löschen oder dem Verlassen einer Gruppe steht der Fokus auf einem Gruppennamen statt am Seitenanfang.
+
 ## [1.0.8] - 2026-11-24
 
 ### Behoben

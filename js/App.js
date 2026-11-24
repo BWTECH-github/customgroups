@@ -72,9 +72,10 @@
 		_onClickClose: function() {
 			var gruppe = this.listView._selected;
 			this.listView.select(null);
-			// Fokus zurück an die Zeile, aus der die Leiste geöffnet wurde
+			// Fokus zurück an den Gruppennamen, mit dem die Leiste geöffnet wurde
 			if (gruppe) {
-				this.listView.$('.group').filterAttr('data-id', gruppe.id).focus();
+				this.listView.$('.group').filterAttr('data-id', gruppe.id)
+					.find('.group-display-name').focus();
 			}
 			return false;
 		},

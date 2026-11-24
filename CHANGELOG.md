@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.8] - 2026-11-24
+
+### Behoben
+- Im Feld „Benutzer zu dieser Gruppe hinzufügen“ öffnet sich die Vorschlagsliste nicht mehr schon beim Fokus, und Tab verlässt das Feld, ohne den markierten Vorschlag zu übernehmen. Vorher wurde beim Weitertabben ungefragt jemand Mitglied und benachrichtigt.
+
 ## [1.0.7] - 2026-11-20
 
 Redesign-Linie: übernimmt aus main 0.10.6.

@@ -121,29 +121,36 @@
 
 			// Beim Hineinklicken sofort alle Benutzer zeigen: jQuery UI oeffnet
 			// das Menue von sich aus erst nach einem Tastendruck. search()
-			// umgeht dabei die 750-ms-Verzoegerung.
-			this.$field.on('focus click', _.bind(function(ev) {
-				// Nach dem Hinzufügen setzt das Plugin den Fokus selbst zurück;
-				// die Liste soll dann nicht ungefragt über der Mitgliedertabelle
-				// aufgehen (wer weitertippt, bekommt sie ohnehin).
-				if (ev.type === 'focus' && this._quietFocus) {
-					return;
-				}
+			// umgeht dabei die 750-ms-Verzoegerung. Nur beim Klick, nicht beim
+			// Fokus: wer mit Tab durch den Detailbereich geht, bekam sonst die
+			// ganze Liste mit markiertem ersten Eintrag (WCAG 3.2.1); per
+			// Tastatur oeffnet Pfeil runter die Liste.
+			this.$field.on('click', _.bind(function() {
 				if (!this.$field.autocomplete('widget').is(':visible')) {
 					this.$field.autocomplete('search', this.$field.val() || '');
 				}
 			}, this));
 
+			// Tab verlaesst das Feld, ohne einen Vorschlag zu uebernehmen: jQuery
+			// UI waehlt beim Tab den markierten Eintrag aus, so wurde beim
+			// Weitertabben ungefragt jemand Mitglied und benachrichtigt (WCAG
+			// 3.2.2). Die Liste wird vorher geschlossen - im Einfangschritt,
+			// damit es vor dem Tastenhandler von jQuery UI geschieht.
+			this.$field[0].addEventListener('keydown', function(ev) {
+				if (ev.key === 'Tab') {
+					$field.autocomplete('close');
+				}
+			}, true);
+
 			this.delegateEvents();
 		},
 
 		/**
-		 * Leert das Feld und fokussiert es, ohne die Vorschlagsliste zu öffnen.
+		 * Leert das Feld und fokussiert es; die Vorschlagsliste bleibt zu
+		 * (sie oeffnet sich nur auf Klick, Eingabe oder Pfeil runter).
 		 */
 		resetQuietly: function() {
-			this._quietFocus = true;
 			this.$field.val('').focus();
-			this._quietFocus = false;
 		},
 
 		getValue: function() {

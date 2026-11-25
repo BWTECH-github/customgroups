@@ -8,10 +8,12 @@ templates['membersInput'] = template({"compiler":[8,">= 4.3.0"],"main":function(
         return undefined
     };
 
-  return "<div>\n	<input class=\"member-input-field\" type=\"text\" placeholder=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"placeholderText") || (depth0 != null ? lookupProperty(depth0,"placeholderText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"placeholderText","hash":{},"data":data,"loc":{"start":{"line":2,"column":60},"end":{"line":2,"column":79}}}) : helper)))
-    + "\" aria-label=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"placeholderText") || (depth0 != null ? lookupProperty(depth0,"placeholderText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"placeholderText","hash":{},"data":data,"loc":{"start":{"line":2,"column":93},"end":{"line":2,"column":112}}}) : helper)))
-    + "\" />\n	<span class=\"loading icon-loading-small hidden\"></span>\n</div>\n\n";
+  return "<div class=\"oco-feldpaar\">\n	<label for=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"inputId") || (depth0 != null ? lookupProperty(depth0,"inputId") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"inputId","hash":{},"data":data,"loc":{"start":{"line":3,"column":13},"end":{"line":3,"column":24}}}) : helper)))
+    + "\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"labelText") || (depth0 != null ? lookupProperty(depth0,"labelText") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"labelText","hash":{},"data":data,"loc":{"start":{"line":3,"column":26},"end":{"line":3,"column":39}}}) : helper)))
+    + "</label>\n	<div class=\"oco-feldreihe\">\n		<input id=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"inputId") || (depth0 != null ? lookupProperty(depth0,"inputId") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"inputId","hash":{},"data":data,"loc":{"start":{"line":5,"column":13},"end":{"line":5,"column":24}}}) : helper)))
+    + "\" class=\"member-input-field\" type=\"text\" />\n		<span class=\"loading icon-loading-small hidden\"></span>\n	</div>\n</div>\n\n";
 },"useData":true});
 })();

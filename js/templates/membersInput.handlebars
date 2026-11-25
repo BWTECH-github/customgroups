@@ -1,5 +1,9 @@
-<div>
-	<input class="member-input-field" type="text" placeholder="{{placeholderText}}" aria-label="{{placeholderText}}" />
-	<span class="loading icon-loading-small hidden"></span>
+{{!-- Sichtbare Beschriftung über dem Feld statt Platzhalter (WCAG 3.3.2) --}}
+<div class="oco-feldpaar">
+	<label for="{{inputId}}">{{labelText}}</label>
+	<div class="oco-feldreihe">
+		<input id="{{inputId}}" class="member-input-field" type="text" />
+		<span class="loading icon-loading-small hidden"></span>
+	</div>
 </div>
 

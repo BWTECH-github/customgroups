@@ -52,7 +52,8 @@
 		 */
 		render: function() {
 			this.$el.html(this.template({
-				placeholderText: t('customgroups', 'Add user to this group')
+				labelText: t('customgroups', 'Add member'),
+				inputId: _.uniqueId('customgroups-member-')
 			}));
 
 			this.$field = this.$('input');

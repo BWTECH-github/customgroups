@@ -130,8 +130,11 @@
 	margin-right: 8px;
 }
 
-#customgroups .member-input-field {
-	width: 90%;
+/* Gruppenname und „Gruppe erstellen“ in einer Reihe (Feldpaar des Kerns).
+   Die Reihenregel des Kerns lässt jedes input wachsen, auch den Knopf; er
+   bleibt so breit wie sein Text. */
+#body-settings.oco-shell #customgroups .oco-feldreihe input[type='submit'] {
+	flex: 0 0 auto;
 }
 
 #customgroups .group-member-list .user-display-name {

@@ -1,13 +1,21 @@
+{{!-- Gruppenname mit sichtbarer Beschriftung über dem Feld (Feldpaar des
+      Kerns); als Platzhalter verschwand sie mit dem ersten Zeichen (WCAG
+      3.3.2). Pflichtfeld ohne Zusatz. novalidate: ein leerer Name legt wie
+      bisher nichts an, ohne Meldung des Browsers. --}}
 {{#canCreate}}
-<form name="customGroupsCreationForm">
-	<div>
-		<input type="text" name="groupName" placeholder="{{newGroupPlaceholder}}" aria-label="{{newGroupPlaceholder}}" autocomplete="off" autocapitalize="off" autocorrect="off">
-		<input type="submit" value="{{newGroupSubmitLabel}}" />
+<form name="customGroupsCreationForm" novalidate>
+	<div class="oco-feldpaar">
+		<label for="customgroups-new-group-name">{{groupNameLabel}}</label>
+		<div class="oco-feldreihe">
+			<input type="text" id="customgroups-new-group-name" name="groupName" required autocomplete="off" autocapitalize="off" autocorrect="off">
+			<input type="submit" value="{{newGroupSubmitLabel}}" />
+		</div>
 	</div>
 </form>
 {{/canCreate}}
-<form name="customGroupsRenameForm" class="hidden group-rename-form">
-	<input type="text" value="" placeholder="{{newGroupPlaceholder}}" aria-label="{{newGroupPlaceholder}}" />
+<form name="customGroupsRenameForm" class="hidden group-rename-form oco-feldpaar" novalidate>
+	<label for="customgroups-rename-group-name">{{groupNameLabel}}</label>
+	<input type="text" id="customgroups-rename-group-name" value="" required />
 </form>
 <table class="grid hidden">
 <thead>

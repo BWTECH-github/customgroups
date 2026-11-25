@@ -31,6 +31,7 @@
 			'submit form.group-rename-form': '_onSubmitRename',
 			'keyup form.group-rename-form>input': '_onCancelRename',
 			'blur form.group-rename-form>input': '_onBlurRename',
+			'mousedown form.group-rename-form>label': '_onRenameLabelMouseDown',
 			'click .select': '_onSelect',
 			'click .action-rename-group': '_onRenameGroup',
 			'click .action-delete-group': '_onDeleteGroup',
@@ -162,6 +163,15 @@
 
 		_onBlurRename: function() {
 			this._submitRename();
+		},
+
+		/**
+		 * Ein Klick auf die Beschriftung nahm dem Feld den Fokus, und das
+		 * Verlassen des Feldes speichert und schließt das Umbenennen. Das Feld
+		 * behält den Fokus.
+		 */
+		_onRenameLabelMouseDown: function(ev) {
+			ev.preventDefault();
 		},
 
 		_onDeleteGroup: function(ev) {
@@ -451,7 +461,7 @@
 		render: function() {
 			this.$el.html(this.template({
 				displayNameLabel: t('customgroups', 'Display name'),
-				newGroupPlaceholder: t('customgroups', 'Group name'),
+				groupNameLabel: t('customgroups', 'Group name'),
 				newGroupSubmitLabel: t('customgroups', 'Create group'),
 				groupLabel: t('customgroups', 'Group'),
 				yourRoleLabel: t('customgroups', 'Your role'),

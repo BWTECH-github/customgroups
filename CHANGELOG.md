@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.11] - 2026-11-25
+
+### Behoben
+- Die Felder „Gruppenname“ (Gruppe erstellen und umbenennen) und „Mitglied hinzufügen“ tragen eine sichtbare Beschriftung über dem Feld. Vorher stand der Name nur als Platzhalter im Feld und verschwand beim Tippen.
+
 ## [1.0.10] - 2026-11-25
 
 ### Behoben

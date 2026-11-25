@@ -1,0 +1,4 @@
+# Nur für die Entwicklung (Makefile, jshint); nicht im Paket
+/.jshintrc export-ignore
+/rules export-ignore
+/tools export-ignore

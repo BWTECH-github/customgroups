@@ -38,6 +38,18 @@
 	text-decoration: none;
 }
 
+/* Zielgröße (WCAG 2.5.8): Die Symbolknöpfe haben eine Fläche von 24 × 24 px,
+   das Symbol bleibt 16 px. Seit 1.0.9 ist der Gruppenname ein Knopf; das
+   16-px-Symbol „Umbenennen“ lag nur 3 px daneben. */
+#customgroups .grid td a.icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	margin-left: 4px;
+	background-position: center;
+	background-size: 16px 16px;
+}
+
 /* Der Kern vererbt an Tabellen white-space: nowrap; lange Gruppen- und
    Mitgliedsnamen brechen hier um, statt die Rollenspalte aus dem Fenster zu
    schieben (320–390 px) oder „…“ zu zeigen. Die Zeile bleibt mindestens

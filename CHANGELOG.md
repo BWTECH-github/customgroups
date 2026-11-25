@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.0.10] - 2026-11-25
+
+### Behoben
+- Die Knöpfe „Umbenennen“ und „Löschen“ sind groß genug zum Treffen (24 × 24 px). Seit 1.0.9 lag „Umbenennen“ zu dicht am Gruppennamen.
+
 ## [1.0.9] - 2026-11-24
 
 ### Behoben
